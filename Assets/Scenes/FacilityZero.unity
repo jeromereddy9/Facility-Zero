@@ -43900,7 +43900,7 @@ Transform:
   - {fileID: 125966621}
   - {fileID: 894552497}
   - {fileID: 1940794794}
-  - {fileID: 11454367}
+  - {fileID: 1872555222}
   m_Father: {fileID: 1138797376}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1903969265 stripped
