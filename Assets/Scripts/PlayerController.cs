@@ -61,7 +61,7 @@ namespace FacilityZero.PlayerControl
             ToggleCombatMode();
         }
 
-        // Toggle-combat system
+       
         private void ToggleCombatMode()
         {
             if (inputManager.CombatTogglePressed)
@@ -95,7 +95,7 @@ namespace FacilityZero.PlayerControl
             else
             {
                 bobTimer = 0f;
-                Camera.position = basePos; // reset to root
+                Camera.position = basePos; 
             }
         }
 
