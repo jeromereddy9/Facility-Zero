@@ -1,0 +1,119 @@
+{
+    "version": 1,
+    "name": "PlayerController",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "61556502-b3b6-408d-ac92-37078b83ba45",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "ebffac31-6eb6-4824-9c62-050ea73f06ac",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "47bf990a-96df-4aef-bdd5-67b8dfc84be0",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "5f02e74a-6851-465a-aaf1-890cc91c1059",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "2D Vector",
+                    "id": "31ced125-e673-48c7-b3c7-3c3aab8f3eaf",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "725bb674-4518-4ae4-90b4-be50958d76fb",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "a0865a1f-9e7d-4134-9442-afe8d1bc20dd",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "16dc1540-2317-4de4-b906-14bd7093c064",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "e31df2ce-724f-49c0-9bd6-1aa8c9b07c29",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d7338697-dbe6-4286-a840-5bd905ced553",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc27d076-957b-495a-9b8e-1b5ce1d5e4e0",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
