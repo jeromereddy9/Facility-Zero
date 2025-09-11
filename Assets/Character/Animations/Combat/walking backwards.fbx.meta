@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 231d6903bf01367458624b69a289f19b
+guid: 69adca37b69b36540b5af8788baa97a6
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -34,11 +34,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: right turn
+      name: walking backward
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 49
+      lastFrame: 42
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -49,7 +49,7 @@ ModelImporter:
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1

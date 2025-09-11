@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 231d6903bf01367458624b69a289f19b
+guid: f6f1d7c6b60fdcd4b91be05ac63cd74c
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -34,11 +34,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: right turn
+      name: Jumpiong forward
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 49
+      lastFrame: 27
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
