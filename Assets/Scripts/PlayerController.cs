@@ -17,6 +17,7 @@ namespace FacilityZero.PlayerControl
         [SerializeField] private float fovLerpSpeed = 5f;
         [SerializeField] private float bobFrequency = 6f;
         [SerializeField] private float bobAmplitude = 0.05f;
+        [SerializeField] private float nearClip = 0.05f;
 
         [Header("Movement Settings")]
         [SerializeField] private float AnimationBlendSpeed = 8.9f;
@@ -45,6 +46,7 @@ namespace FacilityZero.PlayerControl
             inputManager = GetComponent<InputManager>();
 
             cam = Camera.GetComponent<Camera>();
+            cam.nearClipPlane = nearClip;
             defaultFOV = cam.fieldOfView;
 
             x_velocityHash = Animator.StringToHash("X_Velocity");
