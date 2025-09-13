@@ -111,7 +111,7 @@ namespace FacilityZero.PlayerControl
             currentVel.y = Mathf.Lerp(currentVel.y, inputManager.Move.y * targetSpeed, AnimationBlendSpeed * Time.deltaTime);
 
             Vector3 targetVelocity = transform.TransformDirection(new Vector3(currentVel.x, 0, currentVel.y));
-            Vector3 velocityChange = targetVelocity - playerRB.velocity;
+            Vector3 velocityChange = targetVelocity - playerRB.linearVelocity;
             velocityChange.y = 0;
 
             playerRB.AddForce(velocityChange, ForceMode.VelocityChange);
