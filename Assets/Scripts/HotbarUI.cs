@@ -13,6 +13,13 @@ public class HotbarUI : MonoBehaviour
 
     public Image selectionHighlight;
 
+    [Header("Smooth Movement Settings")]
+    public float moveSpeed = 10f; // how fast the highlight moves
+    public float sizeLerpSpeed = 10f; // how fast the highlight resizes
+
+    private Vector2 targetPosition;
+    private Vector2 targetSize;
+
     void OnEnable()
     {
         PlayerInventory.onInventoryChanged += UpdateUI;
@@ -28,33 +35,49 @@ public class HotbarUI : MonoBehaviour
         if (playerInventory == null)
             playerInventory = FindObjectOfType<PlayerInventory>();
 
-        // Hide highlight at start - no selection initially
         selectionHighlight.gameObject.SetActive(false);
 
-        // Initial UI update
         UpdateUI();
+    }
+
+    void Update()
+    {
+        // Smoothly move and resize highlight towards target
+        if (selectionHighlight.gameObject.activeSelf)
+        {
+            selectionHighlight.rectTransform.position = Vector2.Lerp(
+                selectionHighlight.rectTransform.position,
+                targetPosition,
+                Time.deltaTime * moveSpeed
+            );
+
+            selectionHighlight.rectTransform.sizeDelta = Vector2.Lerp(
+                selectionHighlight.rectTransform.sizeDelta,
+                targetSize,
+                Time.deltaTime * sizeLerpSpeed
+            );
+        }
     }
 
     void UpdateUI()
     {
         if (playerInventory == null) return;
 
-        // Handle selection highlight
+        // Handle highlight
         if (playerInventory.selectedSlotIndex >= 0 && playerInventory.selectedSlotIndex < slotIcons.Length)
         {
             selectionHighlight.gameObject.SetActive(true);
 
-            // Automatically center highlight over the selected slot
             Image targetSlot = slotIcons[playerInventory.selectedSlotIndex];
-            selectionHighlight.rectTransform.position = targetSlot.rectTransform.position;
-            selectionHighlight.rectTransform.sizeDelta = targetSlot.rectTransform.sizeDelta + new Vector2(10, 10); // slightly bigger than slot
+            targetPosition = targetSlot.rectTransform.position;
+            targetSize = targetSlot.rectTransform.sizeDelta + new Vector2(10, 10);
         }
         else
         {
             selectionHighlight.gameObject.SetActive(false);
         }
 
-        // Update slot icons and quantity texts
+        // Update slot icons and quantities
         for (int i = 0; i < slotIcons.Length; i++)
         {
             if (i >= playerInventory.items.Count)
