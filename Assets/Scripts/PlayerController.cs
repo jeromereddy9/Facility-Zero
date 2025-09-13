@@ -24,6 +24,9 @@ namespace FacilityZero.PlayerControl
         [SerializeField] private float WalkSpeed = 2.0f;
         [SerializeField] private float RunSpeed = 6.0f;
 
+        [Header("Combat Settings")]
+        [SerializeField] private GameObject gun; 
+
         private Camera cam;
         private float defaultFOV;
         private float bobTimer;
@@ -48,6 +51,7 @@ namespace FacilityZero.PlayerControl
             cam = Camera.GetComponent<Camera>();
             cam.nearClipPlane = nearClip;
             defaultFOV = cam.fieldOfView;
+            gun.SetActive(false);
 
             x_velocityHash = Animator.StringToHash("X_Velocity");
             y_velocityHash = Animator.StringToHash("Y_Velocity");
@@ -63,14 +67,19 @@ namespace FacilityZero.PlayerControl
             ToggleCombatMode();
         }
 
-       
         private void ToggleCombatMode()
         {
             if (inputManager.CombatTogglePressed)
             {
                 bool current = animator.GetBool("IsInCombat");
                 animator.SetBool("IsInCombat", !current);
-                inputManager.CombatTogglePressed = false; 
+
+                if (gun != null)
+                {
+                    gun.SetActive(animator.GetBool("IsInCombat"));
+                }
+
+                inputManager.CombatTogglePressed = false;
             }
         }
 
@@ -97,7 +106,7 @@ namespace FacilityZero.PlayerControl
             else
             {
                 bobTimer = 0f;
-                Camera.position = basePos; 
+                Camera.position = basePos;
             }
         }
 
