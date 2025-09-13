@@ -7,16 +7,15 @@ using TMPro;
 public class HotbarUI : MonoBehaviour
 {
     public PlayerInventory playerInventory;
-
     public Image[] slotIcons;
     public TextMeshProUGUI[] quantityTexts;
-
     public Image selectionHighlight;
 
     [Header("Smooth Movement Settings")]
-    public float moveSpeed = 10f; // how fast the highlight moves
-    public float sizeLerpSpeed = 10f; // how fast the highlight resizes
+    public float moveSpeed = 15f;
+    public float sizeLerpSpeed = 15f;
 
+    private RectTransform[] slotTransforms;
     private Vector2 targetPosition;
     private Vector2 targetSize;
 
@@ -33,24 +32,32 @@ public class HotbarUI : MonoBehaviour
     void Start()
     {
         if (playerInventory == null)
-            playerInventory = FindObjectOfType<PlayerInventory>();
+            playerInventory = FindFirstObjectByType<PlayerInventory>();
+
+        // Store references to all slot transforms
+        slotTransforms = new RectTransform[slotIcons.Length];
+        for (int i = 0; i < slotIcons.Length; i++)
+        {
+            slotTransforms[i] = slotIcons[i].GetComponent<RectTransform>();
+        }
 
         selectionHighlight.gameObject.SetActive(false);
-
         UpdateUI();
     }
 
     void Update()
     {
-        // Smoothly move and resize highlight towards target
+        // Smoothly move and resize the highlight
         if (selectionHighlight.gameObject.activeSelf)
         {
-            selectionHighlight.rectTransform.position = Vector2.Lerp(
+            // Smooth position movement
+            selectionHighlight.rectTransform.position = Vector3.Lerp(
                 selectionHighlight.rectTransform.position,
-                targetPosition,
+                new Vector3(targetPosition.x, targetPosition.y, selectionHighlight.rectTransform.position.z),
                 Time.deltaTime * moveSpeed
             );
 
+            // Smooth size transition
             selectionHighlight.rectTransform.sizeDelta = Vector2.Lerp(
                 selectionHighlight.rectTransform.sizeDelta,
                 targetSize,
@@ -61,20 +68,34 @@ public class HotbarUI : MonoBehaviour
 
     void UpdateUI()
     {
-        if (playerInventory == null) return;
+        if (playerInventory == null)
+        {
+            Debug.LogWarning("HotbarUI: No PlayerInventory reference!");
+            return;
+        }
 
-        // Handle highlight
-        if (playerInventory.selectedSlotIndex >= 0 && playerInventory.selectedSlotIndex < slotIcons.Length)
+        Debug.Log("Updating UI. Selected slot: " + playerInventory.selectedSlotIndex);
+
+        // Handle selection highlight
+        if (playerInventory.selectedSlotIndex >= 0 &&
+            playerInventory.selectedSlotIndex < slotTransforms.Length &&
+            slotTransforms[playerInventory.selectedSlotIndex] != null)
         {
             selectionHighlight.gameObject.SetActive(true);
 
-            Image targetSlot = slotIcons[playerInventory.selectedSlotIndex];
-            targetPosition = targetSlot.rectTransform.position;
-            targetSize = targetSlot.rectTransform.sizeDelta + new Vector2(10, 10);
+            // Get the center position of the target slot in world space
+            RectTransform targetSlot = slotTransforms[playerInventory.selectedSlotIndex];
+            targetPosition = targetSlot.position;
+
+            // Use the slot's size plus a small margin for the highlight
+            targetSize = targetSlot.sizeDelta + new Vector2(20f, 20f);
+
+            Debug.Log("Highlight target: Slot " + playerInventory.selectedSlotIndex + " at position " + targetPosition);
         }
         else
         {
             selectionHighlight.gameObject.SetActive(false);
+            Debug.Log("Hiding highlight - no valid selection");
         }
 
         // Update slot icons and quantities
@@ -94,6 +115,8 @@ public class HotbarUI : MonoBehaviour
                 slotIcons[i].sprite = item.icon;
                 slotIcons[i].enabled = true;
                 quantityTexts[i].text = item.quantity > 1 ? "x" + item.quantity.ToString() : "";
+
+                Debug.Log("Slot " + i + ": " + item.itemName + " x" + item.quantity);
             }
             else
             {
@@ -108,6 +131,23 @@ public class HotbarUI : MonoBehaviour
         if (playerInventory != null && playerInventory.selectedSlotIndex >= 0)
         {
             playerInventory.UseItem(playerInventory.selectedSlotIndex);
+        }
+    }
+
+    // Debug method to test highlight positioning
+    public void TestHighlightPosition(int slotIndex)
+    {
+        if (slotIndex >= 0 && slotIndex < slotTransforms.Length && slotTransforms[slotIndex] != null)
+        {
+            selectionHighlight.gameObject.SetActive(true);
+            targetPosition = slotTransforms[slotIndex].position;
+            targetSize = slotTransforms[slotIndex].sizeDelta + new Vector2(20f, 20f);
+
+            // Snap immediately for testing
+            selectionHighlight.rectTransform.position = targetPosition;
+            selectionHighlight.rectTransform.sizeDelta = targetSize;
+
+            Debug.Log("Test highlight at slot " + slotIndex + ", position: " + targetPosition);
         }
     }
 }
