@@ -3,30 +3,27 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [System.Serializable]
+public class InventoryItem
+{
+    public Sprite icon;      // Icon for hotbar display
+    public string tagName;   // Stores the prefab's tag
+    public int quantity;     // How many of this item
+
+    public InventoryItem(Sprite iconSprite, string prefabTag, int initialQuantity)
+    {
+        icon = iconSprite;
+        tagName = prefabTag;
+        quantity = initialQuantity;
+    }
+}
+
 public class PlayerInventory : MonoBehaviour
 {
     public delegate void OnInventoryChanged();
     public static event OnInventoryChanged onInventoryChanged;
 
-    [System.Serializable]
-    public class InventoryItem
-    {
-        public string itemType; // Uses GameObject tag
-        public Sprite icon;
-        public GameObject prefab;
-        public int quantity;
-
-        public InventoryItem(string type, Sprite iconSprite, GameObject prefabObj, int amount)
-        {
-            itemType = type;
-            icon = iconSprite;
-            prefab = prefabObj;
-            quantity = amount;
-        }
-    }
-
     public List<InventoryItem> items = new List<InventoryItem>();
-    public int selectedSlotIndex = -1;
+    public int selectedSlotIndex = -1; // Currently selected hotbar slot
 
     void Start()
     {
@@ -38,24 +35,30 @@ public class PlayerInventory : MonoBehaviour
         HandleHotbarSelection();
     }
 
+    // Initialize empty inventory slots
     void InitializeInventory()
     {
         items.Clear();
-        for (int i = 0; i < 3; i++)
-            items.Add(new InventoryItem("Empty", null, null, 0));
+        for (int i = 0; i < 3; i++) // 3-slot hotbar
+        {
+            items.Add(new InventoryItem(null, "", 0));
+        }
 
         selectedSlotIndex = -1;
         onInventoryChanged?.Invoke();
+        Debug.Log("Inventory initialized with " + items.Count + " empty slots");
     }
 
+    // Handle slot selection via keyboard/mouse scroll
     void HandleHotbarSelection()
     {
         Keyboard keyboard = Keyboard.current;
-        if (keyboard == null) return;
-
-        if (keyboard.digit1Key.wasPressedThisFrame) SelectSlot(0);
-        if (keyboard.digit2Key.wasPressedThisFrame) SelectSlot(1);
-        if (keyboard.digit3Key.wasPressedThisFrame) SelectSlot(2);
+        if (keyboard != null)
+        {
+            if (keyboard.digit1Key.wasPressedThisFrame) SelectSlot(0);
+            if (keyboard.digit2Key.wasPressedThisFrame) SelectSlot(1);
+            if (keyboard.digit3Key.wasPressedThisFrame) SelectSlot(2);
+        }
 
         Mouse mouse = Mouse.current;
         if (mouse != null)
@@ -74,60 +77,71 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    void SelectSlot(int index)
+    void SelectSlot(int newIndex)
     {
-        if (index < 0 || index >= items.Count) return;
+        if (newIndex < 0 || newIndex >= items.Count) return;
 
-        selectedSlotIndex = index == selectedSlotIndex ? -1 : index;
+        selectedSlotIndex = (newIndex == selectedSlotIndex) ? -1 : newIndex;
+        Debug.Log("Selected slot: " + selectedSlotIndex);
         onInventoryChanged?.Invoke();
     }
 
-    public bool AddItem(string tagName, Sprite icon, GameObject prefab, int quantityToAdd = 1)
+    // Add an item to inventory by stacking same tags
+    public bool AddItem(Sprite icon, string tagName, int quantityToAdd = 1)
     {
-        // Stack with existing item
-        for (int i = 0; i < items.Count; i++)
+        Debug.Log("Adding item with tag: " + tagName);
+
+        // Stack with existing same-tag items
+        foreach (var item in items)
         {
-            if (items[i].itemType == tagName)
+            if (item.tagName == tagName)
             {
-                items[i].quantity += quantityToAdd;
+                item.quantity += quantityToAdd;
                 onInventoryChanged?.Invoke();
                 return true;
             }
         }
 
-        // Add to empty slot
-        for (int i = 0; i < items.Count; i++)
+        // Find first empty slot
+        foreach (var item in items)
         {
-            if (items[i].itemType == "Empty")
+            if (item.tagName == "")
             {
-                items[i] = new InventoryItem(tagName, icon, prefab, quantityToAdd);
+                item.icon = icon;
+                item.tagName = tagName;
+                item.quantity = quantityToAdd;
                 onInventoryChanged?.Invoke();
                 return true;
             }
         }
 
+        Debug.LogWarning("Inventory full! Could not add: " + tagName);
         return false;
     }
 
+    // Use item in selected slot
     public void UseItem(int slotIndex)
     {
         if (slotIndex < 0 || slotIndex >= items.Count) return;
 
         InventoryItem item = items[slotIndex];
-        if (item.itemType != "Empty" && item.quantity > 0)
+        if (item.tagName != "" && item.quantity > 0)
         {
             item.quantity--;
 
-            if (item.prefab != null)
-                Instantiate(item.prefab, transform.position + transform.forward, transform.rotation);
-
             if (item.quantity <= 0)
-                items[slotIndex] = new InventoryItem("Empty", null, null, 0);
+            {
+                // Clear slot if quantity is zero
+                item.icon = null;
+                item.tagName = "";
+                item.quantity = 0;
+            }
 
             onInventoryChanged?.Invoke();
         }
     }
 
+    // Get currently selected item
     public InventoryItem GetSelectedItem()
     {
         if (selectedSlotIndex >= 0 && selectedSlotIndex < items.Count)

@@ -3,12 +3,14 @@ using UnityEngine;
 public class ObjectPickUp : MonoBehaviour
 {
     [Header("Pickup Settings")]
-    public Sprite icon; // Assign a sprite manually or via AutoIconGenerator
-    public GameObject itemPrefab;
-    public int quantity = 1;
+    public Sprite icon; // Icon for hotbar
+    public Sprite fallbackIcon; // Backup icon if none assigned
 
-    // Use the GameObject tag for identification
-    public string ItemType => gameObject.tag;
+    private void Start()
+    {
+        if (icon == null && fallbackIcon != null)
+            icon = fallbackIcon;
+    }
 
     public void PickUp(PlayerInventory inventory)
     {
@@ -18,14 +20,9 @@ public class ObjectPickUp : MonoBehaviour
             return;
         }
 
-        if (inventory.AddItem(ItemType, icon, itemPrefab, quantity))
-        {
-            Debug.Log($"Picked up: {ItemType} (Quantity: {quantity})");
-            Destroy(gameObject);
-        }
-        else
-        {
-            Debug.LogWarning($"Inventory full! Could not pick up: {ItemType}");
-        }
+        Sprite iconToUse = icon != null ? icon : fallbackIcon;
+        inventory.AddItem(iconToUse, gameObject.tag, 1); // Store icon and tag
+        Destroy(gameObject);
+        Debug.Log("Picked up item with tag: " + gameObject.tag);
     }
 }
