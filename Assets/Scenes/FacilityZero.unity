@@ -14397,9 +14397,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
   items:
-  - itemName: 
+  - itemType: 
     icon: {fileID: 0}
-    itemPrefab: {fileID: 0}
+    prefab: {fileID: 0}
     quantity: 0
   selectedSlotIndex: 0
 --- !u!114 &1628428811
@@ -15484,6 +15484,10 @@ PrefabInstance:
     - target: {fileID: 6313644717159640205, guid: 2b4b58d907deb8c408c7a9812adf1070, type: 3}
       propertyPath: m_Name
       value: Sphere_PickupTest
+      objectReference: {fileID: 0}
+    - target: {fileID: 6313644717159640205, guid: 2b4b58d907deb8c408c7a9812adf1070, type: 3}
+      propertyPath: m_TagString
+      value: Sphere
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

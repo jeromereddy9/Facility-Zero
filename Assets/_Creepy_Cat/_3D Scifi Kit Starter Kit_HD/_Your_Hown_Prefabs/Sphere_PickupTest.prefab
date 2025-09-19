@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2865800648521261092}
   m_Layer: 0
   m_Name: Sphere_PickupTest
-  m_TagString: Untagged
+  m_TagString: Sphere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,9 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5992ea02fd9648891f1c521b6ef5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPickUp
-  itemName: Sphere
   icon: {fileID: 0}
   itemPrefab: {fileID: 0}
   quantity: 1
-  fallbackIcon: {fileID: 0}
-  useFallbackIfNoIcon: 1
