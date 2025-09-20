@@ -8,7 +8,7 @@ public class PickupPopupUI : MonoBehaviour
     public TextMeshProUGUI popupText;
 
     [Header("Settings")]
-    public string pickupPrompt = "";
+    public string pickupPrompt = "Press F to pick up ";
     public float checkInterval = 0.2f;
     public float popupRange = 3f;
 
