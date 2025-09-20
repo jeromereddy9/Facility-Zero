@@ -11,13 +11,13 @@ namespace FacilityZero.PlayerControl
         [SerializeField] private Transform CameraRoot;
         [SerializeField] private Transform Camera;
         [SerializeField] private float UpperLimit = -40.0f;
-        [SerializeField] private float BottomLimit = 55.0f;
+        [SerializeField] private float BottomLimit = 25.0f;
         [SerializeField] private float MouseSensitivity = 2.0f;
         [SerializeField] private float runFOV = 75f;
         [SerializeField] private float fovLerpSpeed = 5f;
         [SerializeField] private float bobFrequency = 6f;
-        [SerializeField] private float bobAmplitude = 0.05f;
-        [SerializeField] private float nearClip = 0.05f;
+        [SerializeField] private float bobAmplitude = 0.02f;
+        [SerializeField] private float nearClip = 0.17f;
 
         [Header("Movement Settings")]
         [SerializeField] private float AnimationBlendSpeed = 8.9f;
@@ -75,6 +75,20 @@ namespace FacilityZero.PlayerControl
             {
                 bool current = animator.GetBool("IsInCombat");
                 animator.SetBool("IsInCombat", !current);
+
+                if (!current == true)
+                {
+                    nearClip = 0.01f;
+                    BottomLimit = 10.0f;
+                    UpperLimit = -25f;
+                    runFOV = 65f;
+                    bobAmplitude = 0f;
+                }
+                else if (!current == false)
+                {
+                    nearClip = 0.17f;
+                    BottomLimit = 30.0f;
+                }
 
                 if (gun != null)
                 {
