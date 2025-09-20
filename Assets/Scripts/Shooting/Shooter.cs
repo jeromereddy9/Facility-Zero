@@ -1,5 +1,6 @@
 using UnityEngine;
 using FacilityZero.Manager;
+
 namespace FacilityZero.GunController
 {
     public class Shooter : MonoBehaviour
@@ -8,15 +9,19 @@ namespace FacilityZero.GunController
         public Transform FirePoint;
         public GameObject Fire;
         public GameObject HitPoint;
+
         [Header("Shotgun Settings")]
         [SerializeField] private int pelletCount = 8;
         [SerializeField] private float spreadAngle = 8f;
         [SerializeField] private float fireRange = 20f;
         [SerializeField] private float fireRate = 0.5f; // seconds between shots
         private float nextFireTime = 0f;
+
         [Header("Effect Lifetimes")]
         [SerializeField] private float effectLifetime = 0.5f;
+
         private InputManager inputManager;
+
         private void Start()
         {
             inputManager = GetComponentInParent<InputManager>();
@@ -29,6 +34,7 @@ namespace FacilityZero.GunController
                 }
             }
         }
+
         private void Update()
         {
             // Only fire if enough time has passed since last shot
@@ -38,15 +44,29 @@ namespace FacilityZero.GunController
                 nextFireTime = Time.time + fireRate;
             }
         }
+
         private void Shoot()
         {
-            // Spawn muzzle effect and destroy it after a short time
-            if (Fire != null)
+            // --- MUZZLE FLASH ---
+            if (Fire != null && FirePoint != null)
             {
-                GameObject muzzleFlash = Instantiate(Fire, FirePoint.position, FirePoint.rotation, FirePoint);
+                // Parent to FirePoint so it always sticks to the barrel
+                GameObject muzzleFlash = Instantiate(Fire, FirePoint);
+                muzzleFlash.transform.localPosition = Vector3.zero;
+                muzzleFlash.transform.localRotation = Quaternion.identity;
+
+                // Play particle system if present
+                var ps = muzzleFlash.GetComponent<ParticleSystem>();
+                if (ps != null)
+                {
+                    ps.Clear();
+                    ps.Play();
+                }
+
                 Destroy(muzzleFlash, effectLifetime);
             }
-            // Fire multiple pellets
+
+            // --- PELLETS / HITS ---
             for (int i = 0; i < pelletCount; i++)
             {
                 Vector3 dir = GetSpreadDirection();
@@ -60,6 +80,7 @@ namespace FacilityZero.GunController
                 }
             }
         }
+
         private Vector3 GetSpreadDirection()
         {
             float yaw = Random.Range(-spreadAngle, spreadAngle);

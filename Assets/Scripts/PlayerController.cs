@@ -33,6 +33,7 @@ namespace FacilityZero.PlayerControl
 
         private Rigidbody playerRB;
         private InputManager inputManager;
+        //private WeaponIK weaponIK;
         private Animator animator;
         private bool hasAnimator;
 
@@ -47,6 +48,7 @@ namespace FacilityZero.PlayerControl
             hasAnimator = TryGetComponent(out animator);
             playerRB = GetComponent<Rigidbody>();
             inputManager = GetComponent<InputManager>();
+            //weaponIK = GetComponent<WeaponIK>();
 
             cam = Camera.GetComponent<Camera>();
             cam.nearClipPlane = nearClip;
@@ -76,12 +78,13 @@ namespace FacilityZero.PlayerControl
 
                 if (gun != null)
                 {
-                    gun.SetActive(animator.GetBool("IsInCombat"));
+                    gun.SetActive(!current);
                 }
 
                 inputManager.CombatTogglePressed = false;
             }
         }
+
 
         private void HandleFOV()
         {
