@@ -11,7 +11,7 @@ namespace FacilityZero.PlayerControl
         [SerializeField] private Transform CameraRoot;
         [SerializeField] private Transform Camera;
         [SerializeField] private float UpperLimit = -40.0f;
-        [SerializeField] private float BottomLimit = 25.0f;
+        [SerializeField] private float BottomLimit = 30.0f;
         [SerializeField] private float MouseSensitivity = 2.0f;
         [SerializeField] private float runFOV = 75f;
         [SerializeField] private float fovLerpSpeed = 5f;

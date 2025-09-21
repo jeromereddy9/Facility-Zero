@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cube
   - Sphere
+  - Access Card
   layers:
   - Default
   - TransparentFX
