@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     private Animator animator;
 
     private NavMeshAgent navAgent;
+    public Transform waypointCluster;
 
     private void Start()
     {

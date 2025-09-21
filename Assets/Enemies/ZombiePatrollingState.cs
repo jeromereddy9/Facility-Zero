@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,50 +15,64 @@ public class ZombiePatrollingState : StateMachineBehaviour
 
     List<Transform> wayPointsList = new List<Transform>();
 
+    // Each enemy has its own cluster (assign this in Inspector for Enemy)
+    Transform waypointCluster;
+
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // Initialisation //
-
         player = GameObject.FindGameObjectWithTag("Player").transform;
         agent = animator.GetComponent<NavMeshAgent>();
 
         agent.speed = patrolSpeed;
         timer = 0;
 
-        // Get all waypoints and Move to First Waypoint //
-
-        GameObject waypointCluster = GameObject.FindGameObjectWithTag("Waypoints");
-        foreach(Transform t in waypointCluster.transform)
+        // Get cluster reference from Enemy script
+        Enemy enemy = animator.GetComponent<Enemy>();
+        if (enemy != null)
         {
-            wayPointsList.Add(t);
+            waypointCluster = enemy.waypointCluster;
         }
 
-        Vector3 nextPosition = wayPointsList[Random.Range(0, wayPointsList.Count)].position;
-        agent.SetDestination(nextPosition);
+
+        // Clear and repopulate waypoints from this enemy's cluster //
+        wayPointsList.Clear();
+
+        if (waypointCluster != null)
+        {
+            foreach (Transform t in waypointCluster)
+            {
+                wayPointsList.Add(t);
+            }
+
+            // Move to first waypoint
+            if (wayPointsList.Count > 0)
+            {
+                Vector3 nextPosition = wayPointsList[Random.Range(0, wayPointsList.Count)].position;
+                agent.SetDestination(nextPosition);
+            }
+        }
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // If  agent arrived at waypoint, move to another waypoint //
+        if (wayPointsList.Count == 0) return;
 
-        if(agent.remainingDistance <= agent.stoppingDistance)
+        // If agent arrived at waypoint, move to another waypoint //
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
             agent.SetDestination(wayPointsList[Random.Range(0, wayPointsList.Count)].position);
         }
 
         // Transition to Idle state // 
-
         timer += Time.deltaTime;
-
-        if(timer > patrollingTime)
+        if (timer > patrollingTime)
         {
             animator.SetBool("isPatrolling", true);
         }
 
         // Transition to Chase State //
-
         float distanceFromPlayer = Vector3.Distance(player.position, animator.transform.position);
-
         if (distanceFromPlayer < detectionArea)
         {
             animator.SetBool("isChasing", true);
