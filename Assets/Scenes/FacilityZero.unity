@@ -17144,7 +17144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03e5992ea02fd9648891f1c521b6ef5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPickUp
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b8b77e88e9160094da5d2c588eb29fa6, type: 3}
   fallbackIcon: {fileID: 0}
 --- !u!65 &1237600272
 BoxCollider:
