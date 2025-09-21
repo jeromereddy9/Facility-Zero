@@ -1,3 +1,4 @@
+using FacilityZero.PlayerInventory;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

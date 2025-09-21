@@ -12,6 +12,7 @@ namespace FacilityZero.Manager
         public bool Run { get; private set; }
         public bool CombatTogglePressed { get; set; }
         public bool Shoot { get; private set; }
+        public bool Interact { get; private set; }
 
         // Private Input System references
         private PlayerInput playerInput;
@@ -20,6 +21,7 @@ namespace FacilityZero.Manager
         private InputAction runAction;
         private InputAction combatModeAction;
         private InputAction shootAction;
+        private InputAction interactAction;
 
         private void Awake()
         {
@@ -33,6 +35,7 @@ namespace FacilityZero.Manager
             runAction = actionMap.FindAction("Run");
             combatModeAction = actionMap.FindAction("Combat Mode");
             shootAction = actionMap.FindAction("Shoot");
+            interactAction = actionMap.FindAction("Interact");
 
             HideCursor();
         }
@@ -51,6 +54,9 @@ namespace FacilityZero.Manager
 
             shootAction.performed += OnShoot;
             shootAction.canceled += OnShoot;
+
+            interactAction.performed += OnInteract;
+            interactAction.canceled += OnInteract;
 
             combatModeAction.performed += OnCombatMode;
 
@@ -71,6 +77,9 @@ namespace FacilityZero.Manager
 
             shootAction.performed -= OnShoot;
             shootAction.canceled -= OnShoot;
+
+            interactAction.performed -= OnInteract;
+            interactAction.canceled -= OnInteract;
 
             combatModeAction.performed -= OnCombatMode;
 
@@ -96,6 +105,11 @@ namespace FacilityZero.Manager
         private void OnShoot(InputAction.CallbackContext context)
         {
             Shoot = context.ReadValueAsButton();
+        }
+
+        private void OnInteract(InputAction.CallbackContext context)
+        {
+            Interact = context.ReadValueAsButton();
         }
 
         private void OnCombatMode(InputAction.CallbackContext context)

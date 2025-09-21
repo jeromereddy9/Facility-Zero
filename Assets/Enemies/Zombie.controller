@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   patrollingTime: 10
-  detectionArea: 12
+  detectionArea: 10
   patrolSpeed: 1
 --- !u!114 &-203858373378376469
 MonoBehaviour:

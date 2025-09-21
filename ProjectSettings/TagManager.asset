@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Cube
   - Sphere
-  - Access Card
   - Enemy
   - Zombie
   - Waypoints
   - ZombieAttackHand
+  - Access Keycard lvl1
+  - Intercom
   layers:
   - Default
   - TransparentFX

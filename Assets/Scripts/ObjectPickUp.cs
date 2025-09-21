@@ -1,3 +1,4 @@
+using FacilityZero.PlayerInventory;
 using UnityEngine;
 
 public class ObjectPickUp : MonoBehaviour
