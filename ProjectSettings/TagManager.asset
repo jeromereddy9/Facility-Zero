@@ -7,6 +7,10 @@ TagManager:
   - Cube
   - Sphere
   - Access Card
+  - Enemy
+  - Zombie
+  - Waypoints
+  - ZombieAttackHand
   layers:
   - Default
   - TransparentFX

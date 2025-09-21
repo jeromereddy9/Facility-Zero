@@ -15,6 +15,7 @@ namespace FacilityZero.GunController
         [SerializeField] private float spreadAngle = 8f;
         [SerializeField] private float fireRange = 20f;
         [SerializeField] private float fireRate = 0.5f; // seconds between shots
+        [SerializeField] public int pelletDamage;
         private float nextFireTime = 0f;
 
         [Header("Effect Lifetimes")]
@@ -72,6 +73,15 @@ namespace FacilityZero.GunController
                 Vector3 dir = GetSpreadDirection();
                 if (Physics.Raycast(FirePoint.position, dir, out RaycastHit hit, fireRange))
                 {
+                    if (hit.collider.CompareTag("Enemy"))
+                    {
+                        var health = hit.collider.GetComponent<Enemy>();
+                        if (health != null)
+                        {
+                            health.TakeDamage(2); // pellet does 2 damage
+                        }
+                    }
+
                     if (HitPoint != null)
                     {
                         GameObject hitEffect = Instantiate(HitPoint, hit.point, Quaternion.LookRotation(hit.normal));
