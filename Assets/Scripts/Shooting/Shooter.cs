@@ -1,5 +1,6 @@
 using UnityEngine;
 using FacilityZero.Manager;
+using TMPro; // Add this for TextMeshPro
 
 namespace FacilityZero.GunController
 {
@@ -15,11 +16,18 @@ namespace FacilityZero.GunController
         [SerializeField] private float spreadAngle = 8f;
         [SerializeField] private float fireRange = 20f;
         [SerializeField] private float fireRate = 0.5f; // seconds between shots
-        [SerializeField] public int pelletDamage;
+        [SerializeField] public int pelletDamage = 2;
         private float nextFireTime = 0f;
 
         [Header("Effect Lifetimes")]
         [SerializeField] private float effectLifetime = 0.5f;
+
+        [Header("Ammo Settings")]
+        [SerializeField] private int maxAmmo = 10;
+        private int currentAmmo;
+
+        [Header("UI")]
+        [SerializeField] private TMP_Text ammoText;
 
         private InputManager inputManager;
 
@@ -30,15 +38,15 @@ namespace FacilityZero.GunController
             {
                 inputManager = FindObjectOfType<InputManager>(); // fallback
                 if (inputManager == null)
-                {
                     Debug.LogError("Shooter: No InputManager found in parents or scene!");
-                }
             }
+
+            currentAmmo = maxAmmo;
+            UpdateAmmoUI();
         }
 
         private void Update()
         {
-            // Only fire if enough time has passed since last shot
             if (inputManager != null && inputManager.Shoot && Time.time >= nextFireTime)
             {
                 Shoot();
@@ -48,15 +56,22 @@ namespace FacilityZero.GunController
 
         private void Shoot()
         {
+            if (currentAmmo <= 0)
+            {
+                Debug.Log("No ammo!");
+                return; // cannot shoot
+            }
+
+            currentAmmo--;
+            UpdateAmmoUI();
+
             // --- MUZZLE FLASH ---
             if (Fire != null && FirePoint != null)
             {
-                // Parent to FirePoint so it always sticks to the barrel
                 GameObject muzzleFlash = Instantiate(Fire, FirePoint);
                 muzzleFlash.transform.localPosition = Vector3.zero;
                 muzzleFlash.transform.localRotation = Quaternion.identity;
 
-                // Play particle system if present
                 var ps = muzzleFlash.GetComponent<ParticleSystem>();
                 if (ps != null)
                 {
@@ -78,7 +93,7 @@ namespace FacilityZero.GunController
                         var health = hit.collider.GetComponent<Enemy>();
                         if (health != null)
                         {
-                            health.TakeDamage(2); // pellet does 2 damage
+                            health.TakeDamage(pelletDamage);
                         }
                     }
 
@@ -97,6 +112,28 @@ namespace FacilityZero.GunController
             float pitch = Random.Range(-spreadAngle, spreadAngle);
             Quaternion spreadRot = Quaternion.Euler(pitch, yaw, 0);
             return spreadRot * FirePoint.forward;
+        }
+
+        private void UpdateAmmoUI()
+        {
+            if (ammoText != null)
+            {
+                ammoText.text = currentAmmo + " / " + maxAmmo;
+
+                // Low ammo warning: red when <= 25% of maxAmmo
+                if (currentAmmo <= maxAmmo * 0.25f)
+                    ammoText.color = Color.red;
+                else
+                    ammoText.color = Color.white;
+            }
+        }
+
+
+        // Optional reload method
+        public void Reload()
+        {
+            currentAmmo = maxAmmo;
+            UpdateAmmoUI();
         }
     }
 }
