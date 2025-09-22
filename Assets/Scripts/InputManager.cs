@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace FacilityZero.Manager
 {
@@ -13,6 +14,8 @@ namespace FacilityZero.Manager
         public bool CombatTogglePressed { get; set; }
         public bool Shoot { get; private set; }
         public bool Interact { get; private set; }
+        public bool Reload { get; private set; }
+        public bool UseItem { get; private set; }
 
         // Private Input System references
         private PlayerInput playerInput;
@@ -22,6 +25,8 @@ namespace FacilityZero.Manager
         private InputAction combatModeAction;
         private InputAction shootAction;
         private InputAction interactAction;
+        private InputAction reloadAction;
+        private InputAction UseItemAction;
 
         private void Awake()
         {
@@ -36,6 +41,8 @@ namespace FacilityZero.Manager
             combatModeAction = actionMap.FindAction("Combat Mode");
             shootAction = actionMap.FindAction("Shoot");
             interactAction = actionMap.FindAction("Interact");
+            reloadAction = actionMap.FindAction("Reload");
+            UseItemAction = actionMap.FindAction("Use Item");
 
             HideCursor();
         }
@@ -57,6 +64,12 @@ namespace FacilityZero.Manager
 
             interactAction.performed += OnInteract;
             interactAction.canceled += OnInteract;
+
+            reloadAction.performed += OnReload;
+            reloadAction.canceled += OnReload;
+
+            UseItemAction.performed += OnUseItem;
+            UseItemAction.canceled += OnUseItem;
 
             combatModeAction.performed += OnCombatMode;
 
@@ -80,6 +93,12 @@ namespace FacilityZero.Manager
 
             interactAction.performed -= OnInteract;
             interactAction.canceled -= OnInteract;
+
+            reloadAction.performed -= OnReload;
+            reloadAction.canceled -= OnReload;
+
+            UseItemAction.performed -= OnUseItem;
+            UseItemAction.canceled -= OnUseItem;
 
             combatModeAction.performed -= OnCombatMode;
 
@@ -115,6 +134,16 @@ namespace FacilityZero.Manager
         private void OnCombatMode(InputAction.CallbackContext context)
         {
             CombatTogglePressed = true;
+        }
+
+        private void OnReload(InputAction.CallbackContext context)
+        {
+            Reload = context.ReadValueAsButton();
+        }
+
+        private void OnUseItem(InputAction.CallbackContext context)
+        {
+            UseItem = context.ReadValueAsButton();
         }
 
         private void HideCursor()

@@ -12,6 +12,8 @@ TagManager:
   - ZombieAttackHand
   - Access Keycard lvl1
   - Intercom
+  - Ammo Box
+  - Med Kit
   layers:
   - Default
   - TransparentFX
