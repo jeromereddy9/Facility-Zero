@@ -19,7 +19,6 @@ namespace FacilityZero.PlayerHealthController
 
         private bool isDead = false;
 
-        // References
         private PlayerInventory.PlayerInventory playerInventory;
         private InputManager inputManager;
 
@@ -53,21 +52,21 @@ namespace FacilityZero.PlayerHealthController
         private void UseSelectedMedKit()
         {
             if (playerInventory == null) return;
-
             // Search all slots for a Med Kit
             for (int i = 0; i < playerInventory.items.Count; i++)
             {
                 var item = playerInventory.items[i];
                 if (item.tagName == "Med Kit" && item.quantity > 0)
                 {
-                    Heal(50); // adjust heal amount
-                    playerInventory.UseItem(i);
-                    Debug.Log("Used Med Kit from slot " + i + ". Healed 50 HP.");
-                    return;
+                    if(HP != maxHP)
+                    {
+                        Heal(50); // adjust heal amount
+                        playerInventory.UseItem(i);
+                        Debug.Log("Used Med Kit from slot " + i + ". Healed 50 HP."+"Player health now, "+HP);
+                        return;
+                    }
                 }
             }
-
-            Debug.Log("No Med Kit available!");
         }
 
 
