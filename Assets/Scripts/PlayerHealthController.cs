@@ -1,3 +1,6 @@
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 using FacilityZero.DeathScreen;
 using FacilityZero.PlayerControl;
 using FacilityZero.PlayerInventory;
@@ -22,7 +25,16 @@ namespace FacilityZero.PlayerHealthController
         private PlayerInventory.PlayerInventory playerInventory;
         private InputManager inputManager;
 
+        // Damage (hit) flash 
+        private Coroutine flashRoutine;
+
+        // Low health warning
+        private bool isLowHealth => HP <= maxHP * 0.25f; 
+        private float pulseSpeed = 5f;                    
+        private float pulseAmount = 0.5f;      
+        
         private void Start()
+
         {
             HP = maxHP;
 
@@ -31,6 +43,8 @@ namespace FacilityZero.PlayerHealthController
                 healthBar.maxValue = maxHP;
                 healthBar.value = HP;
             }
+
+            UpdateHealthColour();
 
             playerInventory = GetComponent<PlayerInventory.PlayerInventory>();
             inputManager = FindObjectOfType<InputManager>();
@@ -47,7 +61,47 @@ namespace FacilityZero.PlayerHealthController
                 Debug.Log("H pressed");
                 UseSelectedMedKit();
             }
+
+            if (healthFill != null)
+            {
+                if (isLowHealth) // trigger pulse effect
+                {
+                    float alphaPulse = 0.5f + Mathf.Sin(Time.time * pulseSpeed) * 0.25f; // 0.25 amplitude
+                    Color c = healthFill.color;
+                    healthFill.color = new Color(c.r, c.g, c.b, alphaPulse);
+                }
+                else
+                {
+                    // Reset scale when HP > 25%
+                    healthFill.rectTransform.localScale = Vector3.one;
+                }
+            }
         }
+
+        private void UpdateHealthColour()
+        {
+            if (healthFill == null) return;
+
+            float healthPercent = (float)HP / maxHP;
+
+            // Smoothly blend from Red (low) → Yellow (medium) → Green (full)
+            if (healthPercent > 0.5f)
+                healthFill.color = Color.Lerp(Color.yellow, Color.green, (healthPercent - 0.5f) * 2f);
+            else
+                healthFill.color = Color.Lerp(Color.red, Color.yellow, healthPercent * 2f);
+        }
+
+        private IEnumerator FlashDamage()
+        {
+            if (healthFill == null) yield break;
+
+            Color originalColor = healthFill.color;
+            healthFill.color = Color.white; // flash bright white or red for impact
+            yield return new WaitForSeconds(0.1f); // short flash duration
+            healthFill.color = originalColor;      // restore current gradient color
+        }
+
+   
 
         private void UseSelectedMedKit()
         {
@@ -62,6 +116,7 @@ namespace FacilityZero.PlayerHealthController
                     {
                         Heal(50); // adjust heal amount
                         playerInventory.UseItem(i);
+                        UpdateHealthColour(); // update health colour after healing
                         Debug.Log("Used Med Kit from slot " + i + ". Healed 50 HP."+"Player health now, "+HP);
                         return;
                     }
@@ -79,6 +134,12 @@ namespace FacilityZero.PlayerHealthController
 
             if (healthBar != null)
                 healthBar.value = HP;
+
+            UpdateHealthColour();
+
+            if (flashRoutine != null)
+                StopCoroutine(flashRoutine);
+            flashRoutine = StartCoroutine(FlashDamage());
 
             if (HP <= maxHP * 0.25f)
                 ActivateLowHealthWarning();
@@ -114,6 +175,8 @@ namespace FacilityZero.PlayerHealthController
 
             if (healthBar != null)
                 healthBar.value = HP;
+
+            UpdateHealthColour();
 
             if (HP > maxHP * 0.25f)
                 DisableLowHealthWarning();
