@@ -4141,9 +4141,6 @@ PrefabInstance:
       addedObject: {fileID: 74312844}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 74312843}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 74312842}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &74312840 stripped
@@ -4177,23 +4174,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0.0000019073486, y: 0.03616864, z: 0.0028416133}
---- !u!114 &74312843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 74312841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &74312844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11453,9 +11433,6 @@ PrefabInstance:
       addedObject: {fileID: 234918268}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 234918267}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 234918266}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &234918264 stripped
@@ -11489,23 +11466,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0.0000019073486, y: 0.03616864, z: 0.0028416133}
---- !u!114 &234918267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 234918265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &234918268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16395,9 +16355,6 @@ PrefabInstance:
       addedObject: {fileID: 332062607}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 332062606}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 332062605}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &332062603 stripped
@@ -16431,23 +16388,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0.0000019073486, y: 0.03616864, z: 0.002839706}
---- !u!114 &332062606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 332062604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &332062607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21275,9 +21215,6 @@ PrefabInstance:
       addedObject: {fileID: 398223897}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 398223896}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 398223895}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &398223893 stripped
@@ -21311,23 +21248,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0, y: 0.03616864, z: 0.0028416133}
---- !u!114 &398223896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 398223894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &398223897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29210,23 +29130,6 @@ MonoBehaviour:
   tagName: Ammo Box
   ammoToAdd: 7
   shooter: {fileID: 1036210775}
---- !u!114 &557904789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 557904782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!65 &557904790
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32361,9 +32264,6 @@ PrefabInstance:
       addedObject: {fileID: 557904784}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 557904789}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 557904790}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!1 &627693824
@@ -32577,9 +32477,6 @@ PrefabInstance:
       addedObject: {fileID: 627737912}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 627737911}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 627737910}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &627737908 stripped
@@ -32613,23 +32510,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0.0000019073486, y: 0.03616864, z: 0.002839706}
---- !u!114 &627737911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 627737909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &627737912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35530,23 +35410,6 @@ MonoBehaviour:
   tagName: Ammo Box
   ammoToAdd: 7
   shooter: {fileID: 1036210775}
---- !u!114 &695677722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695677715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!65 &695677723
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41229,9 +41092,6 @@ PrefabInstance:
       addedObject: {fileID: 784138738}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 784138737}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 784138736}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &784138734 stripped
@@ -41265,23 +41125,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0, y: 0.03616864, z: 0.0028416133}
---- !u!114 &784138737
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 784138735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &784138738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51762,9 +51605,6 @@ PrefabInstance:
       addedObject: {fileID: 950691360}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 950691359}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 950691358}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &950691356 stripped
@@ -51798,23 +51638,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0, y: 0.03616864, z: 0.0028416133}
---- !u!114 &950691359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950691357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &950691360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65849,9 +65672,6 @@ PrefabInstance:
       addedObject: {fileID: 695677717}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 695677722}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 695677723}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!114 &1224129585
@@ -66276,9 +66096,6 @@ PrefabInstance:
       addedObject: {fileID: 1233950280}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1233950279}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1233950278}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &1233950276 stripped
@@ -66312,23 +66129,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0.0000019073486, y: 0.03616864, z: 0.002839706}
---- !u!114 &1233950279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233950277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &1233950280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67603,23 +67403,6 @@ MonoBehaviour:
   tagName: Ammo Box
   ammoToAdd: 7
   shooter: {fileID: 1036210775}
---- !u!114 &1262058352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1262058345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!65 &1262058353
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -68879,9 +68662,6 @@ PrefabInstance:
       addedObject: {fileID: 1292859805}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1292859804}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1292859803}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &1292859801 stripped
@@ -68915,23 +68695,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0.0000019073486, y: 0.03616864, z: 0.0028416133}
---- !u!114 &1292859804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1292859802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &1292859805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73425,9 +73188,6 @@ PrefabInstance:
       addedObject: {fileID: 1262058347}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1262058352}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1262058353}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!114 &1376965206
@@ -76357,9 +76117,6 @@ PrefabInstance:
       addedObject: {fileID: 1414620862}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1414620861}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1414620860}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &1414620858 stripped
@@ -76393,23 +76150,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0, y: 0.03616864, z: 0.0028416133}
---- !u!114 &1414620861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1414620859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &1414620862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106995,9 +106735,6 @@ PrefabInstance:
       addedObject: {fileID: 2037638473}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2037638472}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2037638471}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &2037638469 stripped
@@ -107031,23 +106768,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0.0000019073486, y: 0.03616864, z: 0.0028416133}
---- !u!114 &2037638472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2037638470}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &2037638473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108352,9 +108072,6 @@ PrefabInstance:
       addedObject: {fileID: 2059879762}
     - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2059879761}
-    - targetCorrespondingSourceObject: {fileID: 8449002457765060703, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2059879760}
   m_SourcePrefab: {fileID: 100100000, guid: 79e1e857869b17b4a96037954a33ed46, type: 3}
 --- !u!4 &2059879758 stripped
@@ -108388,23 +108105,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.12115211, y: 0.07233728, z: 0.050315924}
   m_Center: {x: 0.0000019073486, y: 0.03616864, z: 0.002839706}
---- !u!114 &2059879761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2059879759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c04e631a570e01647b4e301010b3fce9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PickupPopupUI
-  popupPanel: {fileID: 0}
-  popupText: {fileID: 28935845}
-  pickupPrompt: 'Press F to pick up '
-  checkInterval: 0.2
-  popupRange: 3
 --- !u!114 &2059879762
 MonoBehaviour:
   m_ObjectHideFlags: 0
