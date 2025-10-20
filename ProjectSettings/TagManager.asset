@@ -14,14 +14,18 @@ TagManager:
   - Intercom
   - Ammo Box
   - Med Kit
+  - Hunter
+  - PlayerWaypoint
+  - Robot
+  - DroneProjectile
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
+  - PlayerLayer
   - 
   - 
   - 
