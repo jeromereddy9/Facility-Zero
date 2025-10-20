@@ -5,7 +5,7 @@ using System.Collections;
 
 namespace FacilityZero.GunController
 {
-    public class Shooter : MonoBehaviour
+    public class Shooter : MonoBehaviour,ISavable
     {
         [Header("References")]
         public Transform FirePoint;
@@ -177,6 +177,23 @@ namespace FacilityZero.GunController
             }
             ammoText.color = Color.white;
             isFlashing = false;
+        }
+
+        public void SaveData(GameSaveData saveData)
+        {
+            // Save both total ammo and current magazine
+            saveData.totalAmmo = totalAmmo;
+            saveData.currentMag = currentMag;
+        }
+
+
+        public void LoadData(GameSaveData saveData)
+        {
+            // Load values safely (fallbacks in case the keys don't exist)
+            totalAmmo = saveData.totalAmmo;
+            currentMag = Mathf.Clamp(saveData.currentMag, 0, magCapacity);
+
+            UpdateAmmoUI();
         }
     }
 }

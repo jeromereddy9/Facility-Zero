@@ -8,7 +8,7 @@ namespace FacilityZero.IntercomController
     using TMPro;
     using FacilityZero.Manager;
 
-    public class Intercom : MonoBehaviour
+    public class Intercom : MonoBehaviour,ISavable
     {
         [Header("References")]
         [SerializeField] private Transform door;       
@@ -101,6 +101,27 @@ namespace FacilityZero.IntercomController
             {
                 Debug.Log("Missing required keycard!");
                 popupText.text = "Access Denied: Keycard Required";
+            }
+        }
+
+        public void SaveData(GameSaveData saveData)
+        {
+            // You’ll need to uniquely identify each door if you have multiple
+            if (!saveData.intercomStates.ContainsKey(gameObject.name))
+                saveData.intercomStates.Add(gameObject.name, isDoorOpen);
+            else
+                saveData.intercomStates[gameObject.name] = isDoorOpen;
+        }
+
+        public void LoadData(GameSaveData saveData)
+        {
+            if (saveData.intercomStates.TryGetValue(gameObject.name, out bool wasOpen))
+            {
+                isDoorOpen = wasOpen;
+
+                // Immediately update the door position if it was already open
+                if (isDoorOpen && door != null)
+                    door.position = doorOpenPos;
             }
         }
     }

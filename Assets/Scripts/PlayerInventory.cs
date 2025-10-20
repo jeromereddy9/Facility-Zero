@@ -19,7 +19,7 @@ namespace FacilityZero.PlayerInventory
         }
     }
 
-    public class PlayerInventory : MonoBehaviour
+    public class PlayerInventory : MonoBehaviour,ISavable
     {
         public delegate void OnInventoryChanged();
         public static event OnInventoryChanged onInventoryChanged;
@@ -163,6 +163,55 @@ namespace FacilityZero.PlayerInventory
             if (selectedSlotIndex >= 0 && selectedSlotIndex < items.Count)
                 return items[selectedSlotIndex];
             return null;
+        }
+
+        public void SaveData(GameSaveData saveData)
+        {
+            // Clear previous saved inventory
+            saveData.inventoryItems.Clear();
+
+            // Save every slot, including empty ones
+            foreach (var item in items)
+            {
+                saveData.inventoryItems.Add(new GameSaveData.InventoryItemData
+                {
+                    tagName = item.tagName,   // will be "" if empty
+                    quantity = item.quantity
+                });
+            }
+
+            // Save the selected hotbar slot
+            saveData.selectedHotbarSlot = selectedSlotIndex;
+        }
+
+        public void LoadData(GameSaveData saveData)
+        {
+            // Ensure inventory has the correct number of slots
+            int slots = 3;
+            items.Clear();
+            for (int i = 0; i < slots; i++)
+            {
+                items.Add(new InventoryItem(null, "", 0));
+            }
+
+            // Load saved data
+            for (int i = 0; i < saveData.inventoryItems.Count && i < items.Count; i++)
+            {
+                var savedItem = saveData.inventoryItems[i];
+                var slot = items[i];
+
+                slot.tagName = savedItem.tagName;
+                slot.quantity = savedItem.quantity;
+
+                // Optional: Resolve icon from tag if needed
+                // slot.icon = YourIconManager.GetIconByTag(savedItem.tagName);
+            }
+
+            // Restore selected slot
+            selectedSlotIndex = saveData.selectedHotbarSlot;
+
+            // Notify listeners (UI update)
+            onInventoryChanged?.Invoke();
         }
     }
 }

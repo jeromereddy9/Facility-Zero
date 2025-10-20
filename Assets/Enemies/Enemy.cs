@@ -8,6 +8,9 @@ public class Enemy : MonoBehaviour
     private Animator animator;
     private NavMeshAgent navAgent;
 
+    public int CurrentHP { get { return HP; } set { HP = value; } }
+    public int id;
+
     public Transform waypointCluster;
 
     private SphereCollider attackCollider;
