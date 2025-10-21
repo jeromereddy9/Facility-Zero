@@ -96377,6 +96377,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Beam_02
       objectReference: {fileID: 0}
+    - target: {fileID: 103030, guid: c5cb0ba7ade304d19adc444da6394c0c, type: 3}
+      propertyPath: m_TagString
+      value: HunterSpawnPoint
+      objectReference: {fileID: 0}
     - target: {fileID: 403030, guid: c5cb0ba7ade304d19adc444da6394c0c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.1
