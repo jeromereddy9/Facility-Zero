@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using FacilityZero.Manager;
 using TMPro;
 using System.Collections;
@@ -16,69 +16,53 @@ namespace FacilityZero.GunController
         [SerializeField] private int pelletCount = 8;
         [SerializeField] private float spreadAngle = 8f;
         [SerializeField] private float fireRange = 20f;
-        [SerializeField] private float fireRate = 0.5f; // seconds between shots
+        [SerializeField] private float fireRate = 0.5f;
         [SerializeField] public int pelletDamage = 2;
         private float nextFireTime = 0f;
 
-        [Header("Effect Lifetimes")]
-        [SerializeField] private float effectLifetime = 0.5f;
-
         [Header("Ammo Settings")]
-        [SerializeField] private int magCapacity = 7;     // bullets in magazine
-        [SerializeField] public int totalAmmo = 56;      // bullets carried
-        private int currentMag;
+        [SerializeField] public int magCapacity = 7;
+        [SerializeField] public int totalAmmo = 56;
+        public int currentMag;
 
         [Header("UI")]
         [SerializeField] private TMP_Text ammoText;
 
-        private InputManager inputManager;
         private bool isFlashing = false;
+
+        // Properties used by WeaponAnimationHandler
+        public int CurrentMag => currentMag;
+        public int MagCapacity => magCapacity;
+        public int TotalAmmo => totalAmmo;
 
         private void Start()
         {
-            inputManager = GetComponentInParent<InputManager>();
-            if (inputManager == null)
-            {
-                inputManager = FindObjectOfType<InputManager>();
-                if (inputManager == null)
-                    Debug.LogError("Shooter: No InputManager found in parents or scene!");
-            }
-
             currentMag = magCapacity;
             UpdateAmmoUI();
         }
 
-        private void Update()
+        /// <summary>
+        /// Returns true if shooting is possible (magazine not empty and fire rate allows)
+        /// </summary>
+        public bool CanShoot()
         {
-            if (inputManager != null)
-            {
-                // Shooting
-                if (inputManager.Shoot && Time.time >= nextFireTime)
-                {
-                    Shoot();
-                    nextFireTime = Time.time + fireRate;
-                }
+            return currentMag > 0 && Time.time >= nextFireTime;
+        }
 
-                // Reload
-                if (inputManager.Reload)
-                {
-                    Reload();
-                }
-            }
+        public void TryShoot()
+        {
+            if (!CanShoot()) return;
+
+            Shoot();
+            nextFireTime = Time.time + fireRate;
         }
 
         private void Shoot()
         {
-            if (currentMag <= 0)
-            {
-                Debug.Log("No ammo in magazine!");
-                return;
-            }
-
             currentMag--;
             UpdateAmmoUI();
 
-            // --- MUZZLE FLASH ---
+            // Muzzle flash
             if (Fire != null && FirePoint != null)
             {
                 GameObject muzzleFlash = Instantiate(Fire, FirePoint);
@@ -92,41 +76,23 @@ namespace FacilityZero.GunController
                     ps.Play();
                 }
 
-                Destroy(muzzleFlash, effectLifetime);
+                Destroy(muzzleFlash, 0.5f);
             }
 
-            // --- PELLETS / HITS ---
+            // Pellets
             for (int i = 0; i < pelletCount; i++)
             {
                 Vector3 dir = GetSpreadDirection();
                 if (Physics.Raycast(FirePoint.position, dir, out RaycastHit hit, fireRange))
                 {
-                    if (hit.collider.CompareTag("Enemy"))
-                    {
-                        var health = hit.collider.GetComponent<Enemy>();
-                        if (health != null)
-                            health.TakeDamage(pelletDamage);
-                    }
-                    else if (hit.collider.CompareTag("Hunter"))
-                    {
-                        // Debug to see if the ray hits the Hunter
-                        Debug.Log("Hit Hunter: " + hit.collider.name);
-
-                        var health = hit.collider.GetComponent<Hunter>();
-                        if (health != null)
-                            health.TakeDamage(pelletDamage);
-                    }
-                    else if (hit.collider.CompareTag("Robot"))
-                    {
-                        var health = hit.collider.GetComponent<DroneHealth>();
-                        if (health != null)
-                            health.TakeDamage(pelletDamage);
-                    }
+                    if (hit.collider.CompareTag("Enemy") && hit.collider.TryGetComponent<Enemy>(out var e)) e.TakeDamage(pelletDamage);
+                    else if (hit.collider.CompareTag("Hunter") && hit.collider.TryGetComponent<Hunter>(out var h)) h.TakeDamage(pelletDamage);
+                    else if (hit.collider.CompareTag("Robot") && hit.collider.TryGetComponent<DroneHealth>(out var d)) d.TakeDamage(pelletDamage);
 
                     if (HitPoint != null)
                     {
                         GameObject hitEffect = Instantiate(HitPoint, hit.point, Quaternion.LookRotation(hit.normal));
-                        Destroy(hitEffect, effectLifetime);
+                        Destroy(hitEffect, 0.5f);
                     }
                 }
             }
@@ -142,8 +108,7 @@ namespace FacilityZero.GunController
 
         public void Reload()
         {
-            if (currentMag >= magCapacity || totalAmmo <= 0)
-                return; // Magazine full or no ammo left
+            if (currentMag >= magCapacity || totalAmmo <= 0) return;
 
             int bulletsNeeded = magCapacity - currentMag;
 
@@ -167,16 +132,12 @@ namespace FacilityZero.GunController
             {
                 ammoText.text = currentMag + " / " + totalAmmo;
 
-                // Low ammo warning
                 if (currentMag <= magCapacity * 0.25f)
                 {
                     if (!isFlashing)
                         StartCoroutine(FlashAmmoWarning());
                 }
-                else
-                {
-                    ammoText.color = Color.white;
-                }
+                else ammoText.color = Color.white;
             }
         }
 

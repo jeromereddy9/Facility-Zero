@@ -1,3 +1,4 @@
+using FacilityZero.Manager;
 using UnityEngine;
 
 namespace FacilityZero.Combat
@@ -6,7 +7,7 @@ namespace FacilityZero.Combat
     public class WeaponAnimationHandler : MonoBehaviour
     {
         private WeaponManager weaponManager;
-        private FacilityZero.Manager.FPInputManager inputManager;
+        private FPInputManager inputManager;
 
         private void Start()
         {
@@ -16,8 +17,7 @@ namespace FacilityZero.Combat
 
         private void Update()
         {
-            if (weaponManager == null || inputManager == null)
-                return;
+            if (weaponManager == null || inputManager == null) return;
 
             HandleAnimations();
         }
@@ -26,22 +26,32 @@ namespace FacilityZero.Combat
         {
             var weaponAnimator = weaponManager.GetCurrentWeaponAnimator();
             var armsAnimator = weaponManager.GetCurrentArmsAnimator();
+            var shooter = weaponManager.GetCurrentShooter();
 
-            // --- Actions ---
-            if (inputManager.ShootPressedThisFrame)
+            if (shooter == null) return;
+
+            // --- Shoot ---
+            if (inputManager.ShootPressedThisFrame && shooter.CanShoot())
             {
-                weaponAnimator?.ResetTrigger("Shoot"); // prevents overlap
+                weaponAnimator?.ResetTrigger("Shoot");
                 armsAnimator?.ResetTrigger("Shoot");
+
                 weaponAnimator?.SetTrigger("Shoot");
                 armsAnimator?.SetTrigger("Shoot");
+
+                shooter.TryShoot();
             }
 
-            if (inputManager.ReloadPressedThisFrame)
+            // --- Reload ---
+            if (inputManager.ReloadPressedThisFrame && shooter.TotalAmmo > 0 && shooter.CurrentMag < shooter.MagCapacity)
             {
                 weaponAnimator?.ResetTrigger("Reload");
                 armsAnimator?.ResetTrigger("Reload");
+
                 weaponAnimator?.SetTrigger("Reload");
                 armsAnimator?.SetTrigger("Reload");
+
+                shooter.Reload();
             }
         }
     }

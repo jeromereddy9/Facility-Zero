@@ -4131,6 +4131,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5782974285466103221, guid: e7a26468d2d74014499fac3503c87f9e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1168755165}
+    - targetCorrespondingSourceObject: {fileID: 5782974285466103221, guid: e7a26468d2d74014499fac3503c87f9e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1999585660}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7a26468d2d74014499fac3503c87f9e, type: 3}
 --- !u!1001 &74312839
@@ -10625,8 +10628,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 0.9785366, b: 0.92, a: 1}
-  m_Intensity: 3.14159
+  m_Color: {r: 0.8867924, g: 0.8491456, b: 0.8491456, a: 1}
+  m_Intensity: 4.11
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -51525,6 +51528,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5782974285466103221, guid: 3b8de3f41a3a11c4aab24599a74e0a44, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1949199250}
+    - targetCorrespondingSourceObject: {fileID: 5782974285466103221, guid: 3b8de3f41a3a11c4aab24599a74e0a44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1823317247}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b8de3f41a3a11c4aab24599a74e0a44, type: 3}
 --- !u!1001 &946160143
@@ -63201,6 +63207,31 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1168755167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168755164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7c6d22962016f4bbe290b2f0749ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FacilityZero.GunController.Shooter
+  FirePoint: {fileID: 1999585660}
+  Fire: {fileID: 7833499556226579893, guid: 21f89ca3b157e6c488f8333a144f4891, type: 3}
+  HitPoint: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
+  pelletCount: 1
+  spreadAngle: 1
+  fireRange: 25
+  fireRate: 0.5
+  pelletDamage: 2
+  effectLifetime: 0.5
+  magCapacity: 12
+  totalAmmo: 30
+  currentMag: 0
+  ammoText: {fileID: 707604664}
 --- !u!114 &1169417250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82609,6 +82640,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cea7060fe932f0f449ce16bd2f39296f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1168755166}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cea7060fe932f0f449ce16bd2f39296f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1168755167}
   m_SourcePrefab: {fileID: 100100000, guid: cea7060fe932f0f449ce16bd2f39296f, type: 3}
 --- !u!114 &1520737583
 MonoBehaviour:
@@ -91474,7 +91508,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b3ab2e809cca9d04897c818ddac8b9e0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1949199252}
   m_SourcePrefab: {fileID: 100100000, guid: b3ab2e809cca9d04897c818ddac8b9e0, type: 3}
 --- !u!114 &1689562589
 MonoBehaviour:
@@ -96693,6 +96730,37 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &1823317246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1823317247}
+  m_Layer: 0
+  m_Name: ShotgunFirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1823317247
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823317246}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.000164, y: 0.004434, z: -0.00048}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1075315639}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &1824735182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102508,6 +102576,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b3ab2e809cca9d04897c818ddac8b9e0, type: 3}
   m_PrefabInstance: {fileID: 1686123473}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1949199252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949199249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7c6d22962016f4bbe290b2f0749ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FacilityZero.GunController.Shooter
+  FirePoint: {fileID: 1823317247}
+  Fire: {fileID: 7833499556226579893, guid: 21f89ca3b157e6c488f8333a144f4891, type: 3}
+  HitPoint: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
+  pelletCount: 8
+  spreadAngle: 8
+  fireRange: 20
+  fireRate: 0.25
+  pelletDamage: 2
+  effectLifetime: 0.5
+  magCapacity: 7
+  totalAmmo: 15
+  currentMag: 0
+  ammoText: {fileID: 707604664}
 --- !u!1001 &1950073596
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104503,6 +104596,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 415006, guid: 2b1f8fdab10f140829c5de88421a018d, type: 3}
   m_PrefabInstance: {fileID: 1998819056}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1999585659
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1999585660}
+  m_Layer: 0
+  m_Name: PistolFirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1999585660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999585659}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0.00035999846, y: 0.0012889995, z: -0.00014599861}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 816466809}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!114 &1999633894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107919,6 +108043,10 @@ GameObject:
   - component: {fileID: 2050068086}
   - component: {fileID: 2050068085}
   - component: {fileID: 2050068084}
+  - component: {fileID: 2050068090}
+  - component: {fileID: 2050068089}
+  - component: {fileID: 2050068088}
+  - component: {fileID: 2050068087}
   m_Layer: 0
   m_Name: FPS Player
   m_TagString: Player
@@ -108102,10 +108230,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdec9e67ad722c4e8d59386c7e96ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FacilityZero.Combat.WeaponManager
-  pistol: {fileID: 1168755164}
-  shotgun: {fileID: 1949199249}
-  armsPistolAnimator: {fileID: 558553682}
-  armsShotgunAnimator: {fileID: 716065982}
+  weapons:
+  - {fileID: 1168755164}
+  - {fileID: 1949199249}
+  armsAnimators:
+  - {fileID: 558553682}
+  - {fileID: 716065982}
+  shooters:
+  - {fileID: 1168755167}
+  - {fileID: 1949199252}
   inputManager: {fileID: 2050068081}
 --- !u!114 &2050068086
 MonoBehaviour:
@@ -108119,6 +108252,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dee68fcc8c553f24682a09f535c35b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FacilityZero.Combat.WeaponAnimationHandler
+--- !u!114 &2050068087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050068076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39aa380999b3ee441b7b2ae3f1ff1a2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FacilityZero.DeathScreen.DeathScreen
+  fadePanel: {fileID: 997665120}
+  deathText: {fileID: 652024899}
+  fadeDuration: 2
+  textFadeDuration: 1.5
+--- !u!114 &2050068088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050068076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c00e11280b5aaf442956f3131a605b31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerPickup
+  pickupRange: 5
+  pickupLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &2050068089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050068076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd7e13565ebaa74a9af8a9d66ca72b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FacilityZero.PlayerInventory.PlayerInventory
+  items: []
+  selectedSlotIndex: -1
+--- !u!114 &2050068090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050068076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbed814f15eed714589ff870109ca191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FacilityZero.PlayerHealthController.PlayerHealth
+  maxHP: 300
+  HP: 0
+  healthBar: {fileID: 1333340629}
+  healthFill: {fileID: 1389749694}
 --- !u!1 &2050360406 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 138466, guid: 922ecf6a5917b4faeac4f7ec2d210157, type: 3}
