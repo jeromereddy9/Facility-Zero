@@ -7,7 +7,7 @@ public class ZombieIdleState : StateMachineBehaviour
 
     Transform player;
 
-    public float detectionAreaRadius = 14f;
+    public float detectionAreaRadius = 18f;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

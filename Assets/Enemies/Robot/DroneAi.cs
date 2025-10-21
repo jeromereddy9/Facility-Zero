@@ -14,8 +14,8 @@ public class DroneAi : MonoBehaviour
 
     [Header("Patrol Settings")]
     public Transform waypointCluster; // Assign in Inspector
-    public float patrolSpeed = 4f;
-    public float visionRange = 14f;
+    public float patrolSpeed = 3f;
+    public float visionRange = 18f;
     public float engagementRange = 10f;
 
     private List<Transform> wayPointsList = new List<Transform>();
@@ -23,7 +23,7 @@ public class DroneAi : MonoBehaviour
     private bool hasPatrolPoint;
 
     [Header("Combat Settings")]
-    public float attackCoolDown = 0.8f;
+    public float attackCoolDown = 1f;
     private bool isOnAttackCooldown;
     public float forwardShotForce = 10f;
     public float verticalShotForce = 5f;
