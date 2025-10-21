@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using FacilityZero.Manager;
 using TMPro;
 using System.Collections;
@@ -107,12 +107,12 @@ namespace FacilityZero.GunController
                         if (health != null)
                             health.TakeDamage(pelletDamage);
                     }
-                    else if (hit.collider.CompareTag("Hunter"))
-                    {
-                        var health = hit.collider.GetComponent<Hunter>();
-                        if (health != null)
-                            health.TakeDamage(pelletDamage);
-                    }
+                    //else if (hit.collider.CompareTag("Hunter"))
+                    //{
+                    //    var health = hit.collider.GetComponent<Hunter>();
+                    //    if (health != null)
+                    //        health.TakeDamage(pelletDamage);
+                    //}
                     else if (hit.collider.CompareTag("Robot"))
                     {
                         var health = hit.collider.GetComponent<DroneHealth>();
