@@ -1,40 +1,34 @@
 using UnityEngine;
-using UnityEngine.UI; 
+using TMPro;
+using FacilityZero.Manager;
+using FacilityZero.PlayerInventory;
 
 namespace FacilityZero.IntercomController
 {
-    using UnityEngine;
-    using UnityEngine.UI;
-    using TMPro;
-    using FacilityZero.Manager;
-
     public class Intercom : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private Transform door;       
+        [SerializeField] private Transform door;
         [SerializeField] private float doorMoveAmount = 3f;
         [SerializeField] private float doorMoveSpeed = 2f;
-        [SerializeField] private TMP_Text popupText;       
-        [SerializeField] private Camera playerCamera;  
+        [SerializeField] private TMP_Text popupText;
+        [SerializeField] private Camera playerCamera;
+
+        [Header("Keycard Settings")]
         [SerializeField] private string requiredKeyTag = "Access Keycard lvl1";
+        [SerializeField] private int requiredKeyCount = 1; // number of keycards required
 
         private bool isPlayerLooking = false;
         private bool isDoorOpen = false;
         private Vector3 doorClosedPos;
         private Vector3 doorOpenPos;
-        private InputManager inputManager;
+        private FPInputManager inputManager;
 
         void Start()
         {
-            inputManager = GetComponentInParent<InputManager>();
+            inputManager = GetComponentInParent<FPInputManager>() ?? FindObjectOfType<FPInputManager>();
             if (inputManager == null)
-            {
-                inputManager = FindObjectOfType<InputManager>(); // fallback
-                if (inputManager == null)
-                {
-                    Debug.LogError("Shooter: No InputManager found in parents or scene!");
-                }
-            }
+                Debug.LogError("Intercom: No FPInputManager found!");
 
             if (door != null)
             {
@@ -43,14 +37,14 @@ namespace FacilityZero.IntercomController
             }
 
             if (popupText != null)
-                popupText.gameObject.SetActive(false); // hide popup at start
+                popupText.gameObject.SetActive(false);
         }
 
         void Update()
         {
             CheckPlayerLook();
 
-            if (isPlayerLooking && inputManager != null && inputManager.Interact)
+            if (isPlayerLooking && inputManager != null && inputManager.InteractPressedThisFrame)
             {
                 TryOpenDoor();
             }
@@ -64,17 +58,25 @@ namespace FacilityZero.IntercomController
         void CheckPlayerLook()
         {
             Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-            if (Physics.Raycast(ray, out RaycastHit hit, 3f)) // 3 units interaction range
+            PlayerInventory.PlayerInventory inventory = FindObjectOfType<PlayerInventory.PlayerInventory>();
+            int keyCount = inventory != null ? inventory.CountItemsWithTag(requiredKeyTag) : 0;
+
+            if (Physics.Raycast(ray, out RaycastHit hit, 3f))
             {
-                Debug.Log("Ray hit: " + hit.transform.name); // <- debug
                 if (hit.transform.CompareTag("Intercom"))
                 {
                     if (!isPlayerLooking)
                     {
                         isPlayerLooking = true;
                         popupText.gameObject.SetActive(true);
-                        popupText.text = "Press F to use Intercom";
                     }
+
+                    // Update popup with keycard count
+                    if (keyCount >= requiredKeyCount)
+                        popupText.text = $"Press I to use Intercom ({keyCount}/{requiredKeyCount} keycards)";
+                    else
+                        popupText.text = $"Need {requiredKeyCount} keycards ({keyCount}/{requiredKeyCount})";
+
                     return;
                 }
             }
@@ -88,21 +90,22 @@ namespace FacilityZero.IntercomController
 
         void TryOpenDoor()
         {
-            // Assume you have a PlayerInventory class with HasKey(string tag) method
             PlayerInventory.PlayerInventory inventory = FindObjectOfType<PlayerInventory.PlayerInventory>();
+            if (inventory == null) return;
 
-            if (inventory != null && inventory.HasItemWithTag(requiredKeyTag))
+            int keyCount = inventory.CountItemsWithTag(requiredKeyTag);
+
+            if (keyCount >= requiredKeyCount)
             {
-                Debug.Log("Keycard accepted. Opening door...");
                 isDoorOpen = true;
                 popupText.gameObject.SetActive(false);
+                Debug.Log($"Door opened! Player has {keyCount}/{requiredKeyCount} keycards.");
             }
             else
             {
-                Debug.Log("Missing required keycard!");
-                popupText.text = "Access Denied: Keycard Required";
+                popupText.text = $"Access Denied: {requiredKeyCount} keycards required ({keyCount}/{requiredKeyCount})";
+                Debug.Log($"Not enough keycards! Player has {keyCount}/{requiredKeyCount}.");
             }
         }
     }
-
 }

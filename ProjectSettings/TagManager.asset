@@ -20,6 +20,7 @@ TagManager:
   - DroneProjectile
   - HunterAttackHand
   - HunterSpawnPoint
+  - Datapad
   layers:
   - Default
   - TransparentFX
