@@ -4,14 +4,15 @@ using UnityEngine.AI;
 
 public class Hunter : MonoBehaviour
 {
-    // --- ADDED: Static Variables for Respawn & Scaling ---
+    // Static Variables for Respawn & Scaling
     private static int deathCount = 0;
     private static float currentRespawnDelay = 10f; // Default initial delay
     private static float currentChaseSpeed = 5f;   // Default initial speed
     private static int currentAttackDamage = 10;   // Default initial damage
     private static bool isRespawning = false;      // Flag to prevent multiple respawn coroutines
 
-    [Header("Respawn Settings")] // ADDED: Inspector fields for scaling
+    // Fields for respawn scaling
+    [Header("Respawn Settings")] 
     [Tooltip("Tag used on empty GameObjects for respawn locations.")]
     [SerializeField] private string spawnPointTag = "HunterSpawnPoint";
     [SerializeField] private float initialRespawnDelay = 10f;
@@ -24,13 +25,13 @@ public class Hunter : MonoBehaviour
 
 
     [Header("Hunter Health Settings")]
-    [SerializeField] private int initialHP = 50; // MODIFIED: Renamed for clarity on reset
+    [SerializeField] private int initialHP = 50; 
     private int mainHP; // Current health
 
     private Animator animator;
     private NavMeshAgent navAgent;
     private SphereCollider attackCollider;
-    private Collider capCollider; // ADDED: Stored reference for main collider
+    private Collider capCollider; 
 
     [Header("Hunter AI Settings")]
     public float chaseSpeed = 5f;          // Speed during chase (will be updated by scaling)
@@ -38,7 +39,7 @@ public class Hunter : MonoBehaviour
     public float detectionRadius = 9999f;  // Endless detection
     public float stopChaseRadius = 9999f;  // Endless chase
     public float stopAttackingRadius = 2.5f; // Distance to stop attacking
-    public int attackDamage = 10; // ADDED: Public variable for attack logic to read
+    public int attackDamage = 10; // Attack damage
 
     [Header("Death Effect")]
     public GameObject deathEffectPrefab; // Assign in Inspector
@@ -46,17 +47,17 @@ public class Hunter : MonoBehaviour
     public float deathAnimationDuration = 1.5f;
     public float effectLifetime = 5f;     // How long the effect lasts
 
-    private bool isDead = false; // ADDED: Flag for death state
-    private static MonoBehaviour coroutineRunner; // ADDED: Static reference for coroutines
+    private bool isDead = false; // Flag for death state
+    private static MonoBehaviour coroutineRunner; // Static reference for coroutines
 
 
-    private void Awake() // MODIFIED: Changed from Start to Awake for earlier setup
+    private void Awake() 
     {
         EnsureCoroutineRunner();
 
         animator = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
-        capCollider = GetComponent<CapsuleCollider>(); // ADDED: Cache collider reference
+        capCollider = GetComponent<CapsuleCollider>();
 
         // Find Hunter’s hand collider logic remains
         Transform hand = transform.Find("HunterAttackHand");
@@ -71,7 +72,7 @@ public class Hunter : MonoBehaviour
             Debug.LogWarning("Hunter: Could not find 'HunterAttackHand' child object for attack collider.", this);
         }
 
-        // ADDED: Set initial stats only once when the game starts
+        // Set initial stats only once when the game starts
         if (deathCount == 0)
         {
             currentChaseSpeed = initialChaseSpeed;
@@ -80,7 +81,7 @@ public class Hunter : MonoBehaviour
         }
     }
 
-    // ADDED: OnEnable method to handle reset logic
+    // OnEnable method to handle reset logic
     private void OnEnable()
     {
         mainHP = initialHP; // Reset Health
@@ -121,10 +122,7 @@ public class Hunter : MonoBehaviour
         Debug.Log($"Hunter {gameObject.name} Enabled/Respawned.");
     }
 
-    // This original Start() method's logic has been moved to Awake() and OnEnable()
-    private void Start() { /* Now handled by Awake and OnEnable */ }
-
-    // ADDED: Apply stats to the instance
+    // Apply stats to the instance
     private void ApplyCurrentStats()
     {
         this.chaseSpeed = currentChaseSpeed;
@@ -137,13 +135,13 @@ public class Hunter : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        if (isDead) return; // ADDED: check to prevent multiple deaths
+        if (isDead) return; // Check to prevent multiple deaths
 
         mainHP -= damageAmount;
 
         if (mainHP <= 0)
         {
-            isDead = true; // ADDED: set flag
+            isDead = true; // Set flag
 
             if (animator != null)
             {
@@ -184,12 +182,12 @@ public class Hunter : MonoBehaviour
             Debug.LogWarning("Hunter: Death Effect Prefab not assigned.", this);
         }
 
-        // --- MODIFIED: Prepare respawn and disable self instead of destroying ---
+        // Prepare respawn and disable self instead of destroying
         PrepareRespawn(this);
         gameObject.SetActive(false);
     }
 
-    // --- ADDED: Static Respawn Logic ---
+    // Static Respawn Logic
     private static void PrepareRespawn(Hunter sourceSettingsHunter)
     {
         if (isRespawning) return;
@@ -233,7 +231,7 @@ public class Hunter : MonoBehaviour
         isRespawning = false;
     }
 
-    // ADDED: Helper to get the coroutine runner
+    // Helper to get the coroutine runner
     private void EnsureCoroutineRunner()
     {
         if (coroutineRunner == null)
@@ -260,5 +258,5 @@ public class Hunter : MonoBehaviour
     }
 }
 
-// --- ADDED: Dummy MonoBehaviour needed for running coroutines statically ---
+// Dummy MonoBehaviour needed for running coroutines statically ---
 public class EmptyMonoBehaviour : MonoBehaviour { }
