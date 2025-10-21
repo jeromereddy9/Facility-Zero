@@ -48,6 +48,7 @@ namespace FacilityZero.PlayerHealthController
 
             playerInventory = GetComponent<PlayerInventory.PlayerInventory>();
             inputManager = FindObjectOfType<InputManager>();
+
         }
 
         private void Update()
