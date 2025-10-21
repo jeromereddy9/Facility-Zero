@@ -1,16 +1,20 @@
-using UnityEngine;
-using FacilityZero.Manager;
 using FacilityZero.GunController;
+using FacilityZero.Manager;
+using UnityEngine;
 
 namespace FacilityZero.Combat
 {
-    [RequireComponent(typeof(WeaponAnimationHandler))]
+    [RequireComponent(typeof(FPInputManager))]
     public class WeaponManager : MonoBehaviour
     {
         [Header("Weapons")]
-        public GameObject[] weapons;              // world weapon models
-        public Animator[] armsAnimators;          // FPS arms for each weapon
-        public Shooter[] shooters;                // shooter scripts for each weapon
+        public GameObject[] weapons;          // World weapon models
+        public Animator[] armsAnimators;      // FPS arms for each weapon
+        public Shooter[] shooters;            // Shooter scripts for each weapon
+
+        [Header("Camera")]
+        public Transform cameraRoot;          // Pivot/eye height
+        public Transform cameraTransform;     // Camera itself
 
         [Header("Input")]
         public FPInputManager inputManager;
@@ -21,6 +25,23 @@ namespace FacilityZero.Combat
         {
             if (inputManager == null)
                 inputManager = FindObjectOfType<FPInputManager>();
+
+            if (cameraRoot == null)
+            {
+                Debug.LogError("CameraRoot not assigned!");
+                return;
+            }
+
+            if (cameraTransform == null)
+                cameraTransform = cameraRoot.GetComponentInChildren<Camera>().transform;
+
+            // Parent arms to cameraRoot so they move with camera
+            for (int i = 0; i < armsAnimators.Length; i++)
+            {
+                if (armsAnimators[i] != null)
+                    armsAnimators[i].transform.SetParent(cameraRoot, false);
+            }
+
 
             EquipWeapon(currentWeaponIndex);
         }
@@ -95,4 +116,3 @@ namespace FacilityZero.Combat
         }
     }
 }
-

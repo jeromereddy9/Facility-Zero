@@ -79,6 +79,17 @@ namespace FacilityZero.PlayerInventory
             }
         }
 
+        public int CountItemsWithTag(string tagName)
+        {
+            int count = 0;
+            foreach (var item in items)
+            {
+                if (item.tagName == tagName)
+                    count += item.quantity;
+            }
+            return count;
+        }
+
         void SelectSlot(int newIndex)
         {
             if (newIndex < 0 || newIndex >= items.Count) return;
@@ -143,7 +154,6 @@ namespace FacilityZero.PlayerInventory
         }
 
         // can use this method to check if a tag is in the inventory
-        // for example: bool hasKeycard = inventory.HasItemWithTag("Keycard");
         public bool HasItemWithTag(string tagName)
         {
             foreach (var item in items)
