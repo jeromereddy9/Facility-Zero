@@ -8,7 +8,8 @@ public class DroneAi : MonoBehaviour
     [Header("References")]
     [SerializeField] private NavMeshAgent navAgent;
     [SerializeField] private Transform playerTransform;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform firePoint;   // Firepoint 1
+    [SerializeField] private Transform firePoint2;  // Firepoint 2
     [SerializeField] private GameObject projectilePrefab;
 
     [Header("Patrol Settings")]
@@ -32,6 +33,9 @@ public class DroneAi : MonoBehaviour
 
     private bool isPlayerVisible;
     private bool isPlayerInRange;
+
+    // track which firepoint to use next
+    private bool useFirstFirepoint = true;
 
     private void Awake()
     {
@@ -76,29 +80,34 @@ public class DroneAi : MonoBehaviour
         isPlayerInRange = distance <= engagementRange;
     }
 
-   private void FireProjectile()
-{
-    if (projectilePrefab == null || firePoint == null) return;
-
-    // --- Instantiate Projectile ---
-    Rigidbody projectileRb = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation).GetComponent<Rigidbody>();
-    if (projectileRb != null)
+    private void FireProjectile()
     {
-        projectileRb.useGravity = false;
-        projectileRb.velocity = transform.forward * forwardShotForce;
+        if (projectilePrefab == null) return;
+
+        // pick which firepoint to use this time
+        Transform activeFirePoint = useFirstFirepoint ? firePoint : firePoint2;
+        if (activeFirePoint == null) return;
+
+        // --- Instantiate Projectile ---
+        Rigidbody projectileRb = Instantiate(projectilePrefab, activeFirePoint.position, activeFirePoint.rotation).GetComponent<Rigidbody>();
+        if (projectileRb != null)
+        {
+            projectileRb.useGravity = false;
+            projectileRb.velocity = transform.forward * forwardShotForce;
+        }
+        Destroy(projectileRb.gameObject, 2f);
+
+        // --- Instantiate Muzzle Flash ---
+        if (muzzleFlashPrefab != null)
+        {
+            GameObject flash = Instantiate(muzzleFlashPrefab, activeFirePoint.position, activeFirePoint.rotation);
+            flash.transform.parent = activeFirePoint; // attach to current firepoint
+            Destroy(flash, muzzleFlashDuration);
+        }
+
+        // alternate firepoints for next shot
+        useFirstFirepoint = !useFirstFirepoint;
     }
-    Destroy(projectileRb.gameObject, 2f);
-
-    // --- Instantiate Muzzle Flash ---
-    if (muzzleFlashPrefab != null)
-    {
-        GameObject flash = Instantiate(muzzleFlashPrefab, firePoint.position, firePoint.rotation);
-        flash.transform.parent = firePoint; // optional: attach to firePoint so it moves with the drone
-        Destroy(flash, muzzleFlashDuration);
-    }
-}
-
-
 
     private void PickNextPatrolPoint()
     {
@@ -165,5 +174,3 @@ public class DroneAi : MonoBehaviour
         }
     }
 }
-
-

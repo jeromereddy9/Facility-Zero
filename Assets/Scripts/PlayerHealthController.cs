@@ -208,7 +208,7 @@ namespace FacilityZero.PlayerHealthController
             }
             else if (other.CompareTag("DroneProjectile"))
             {
-                TakeDamage(5);
+                TakeDamage(3);
             }
         }
     }
