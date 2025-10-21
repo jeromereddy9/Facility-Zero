@@ -107,12 +107,15 @@ namespace FacilityZero.GunController
                         if (health != null)
                             health.TakeDamage(pelletDamage);
                     }
-                    //else if (hit.collider.CompareTag("Hunter"))
-                    //{
-                    //    var health = hit.collider.GetComponent<Hunter>();
-                    //    if (health != null)
-                    //        health.TakeDamage(pelletDamage);
-                    //}
+                    else if (hit.collider.CompareTag("Hunter"))
+                    {
+                        // Debug to see if the ray hits the Hunter
+                        Debug.Log("Hit Hunter: " + hit.collider.name);
+
+                        var health = hit.collider.GetComponent<Hunter>();
+                        if (health != null)
+                            health.TakeDamage(pelletDamage);
+                    }
                     else if (hit.collider.CompareTag("Robot"))
                     {
                         var health = hit.collider.GetComponent<DroneHealth>();
