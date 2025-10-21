@@ -18,6 +18,8 @@ TagManager:
   - PlayerWaypoint
   - Robot
   - DroneProjectile
+  - HunterAttackHand
+  - HunterSpawnPoint
   layers:
   - Default
   - TransparentFX
