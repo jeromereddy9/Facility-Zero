@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using FacilityZero.DeathScreen;
@@ -23,7 +23,7 @@ namespace FacilityZero.PlayerHealthController
         private bool isDead = false;
 
         private PlayerInventory.PlayerInventory playerInventory;
-        private FPInputManager inputManager;
+        private InputManager inputManager;
 
         // Damage (hit) flash 
         private Coroutine flashRoutine;
@@ -47,7 +47,7 @@ namespace FacilityZero.PlayerHealthController
             UpdateHealthColour();
 
             playerInventory = GetComponent<PlayerInventory.PlayerInventory>();
-            inputManager = FindObjectOfType<FPInputManager>();
+            inputManager = FindObjectOfType<InputManager>();
         }
 
         private void Update()
@@ -56,9 +56,9 @@ namespace FacilityZero.PlayerHealthController
             if (inputManager == null) return;
 
             // Check for Med Kit usage
-            if (inputManager.UsePressedThisFrame)
+            if (inputManager.UseItem)
             {
-                Debug.Log("E pressed");
+                Debug.Log("H pressed");
                 UseSelectedMedKit();
             }
 
@@ -204,7 +204,7 @@ namespace FacilityZero.PlayerHealthController
             }
             else if (other.CompareTag("HunterAttackHand"))
             {
-                TakeDamage(20); // hunter damage
+                TakeDamage(15); // hunter damage
             }
             else if (other.CompareTag("DroneProjectile"))
             {
