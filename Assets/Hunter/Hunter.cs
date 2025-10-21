@@ -4,14 +4,13 @@ using UnityEngine.AI;
 
 public class Hunter : MonoBehaviour
 {
-    // Static Variables for Respawn & Scaling
+    // --- ADDED: Static Variables for Respawn & Scaling ---
     private static int deathCount = 0;
-    private static float currentRespawnDelay = 10f; // Default initial delay
-    private static float currentChaseSpeed = 5f;   // Default initial speed
-    private static int currentAttackDamage = 10;   // Default initial damage
-    private static bool isRespawning = false;      // Flag to prevent multiple respawn coroutines
+    private static float currentRespawnDelay = 10f; 
+    private static float currentChaseSpeed = 5f;   
+    private static int currentAttackDamage = 10;   
+    private static bool isRespawning = false;      
 
-    // Fields for respawn scaling
     [Header("Respawn Settings")] 
     [Tooltip("Tag used on empty GameObjects for respawn locations.")]
     [SerializeField] private string spawnPointTag = "HunterSpawnPoint";
@@ -30,49 +29,61 @@ public class Hunter : MonoBehaviour
 
     private Animator animator;
     private NavMeshAgent navAgent;
-    private SphereCollider attackCollider;
-    private Collider capCollider; 
+    
+    // --- MODIFIED: Private backing field and Public Property for Attack Collider ---
+    private SphereCollider attackColliderInternal; 
+    private Rigidbody rb; // ADDED: Cached Rigidbody
+    
+    // Public access for HunterAttack script to use
+    public SphereCollider AttackCollider => attackColliderInternal;
+    // -------------------------------------------------------------------------------
+    
+    private Collider capCollider; // Stored reference for main collider
+    private GameObject attackHandGO; // Stored reference for attack hand GameObject
+
 
     [Header("Hunter AI Settings")]
-    public float chaseSpeed = 5f;          // Speed during chase (will be updated by scaling)
-    public float attackRadius = 2.5f;      // Distance to start attacking
-    public float detectionRadius = 9999f;  // Endless detection
-    public float stopChaseRadius = 9999f;  // Endless chase
-    public float stopAttackingRadius = 2.5f; // Distance to stop attacking
-    public int attackDamage = 10; // Attack damage
+    public float chaseSpeed = 5f;      
+    public float attackRadius = 2.5f;  
+    public float detectionRadius = 9999f; 
+    public float stopChaseRadius = 9999f; 
+    public float stopAttackingRadius = 2.5f; 
+    public int attackDamage = 10; 
 
     [Header("Death Effect")]
-    public GameObject deathEffectPrefab; // Assign in Inspector
+    public GameObject deathEffectPrefab; 
 
     public float deathAnimationDuration = 1.5f;
-    public float effectLifetime = 5f;     // How long the effect lasts
+    public float effectLifetime = 5f;      
 
-    private bool isDead = false; // Flag for death state
-    private static MonoBehaviour coroutineRunner; // Static reference for coroutines
+    private bool isDead = false; 
+    private static MonoBehaviour coroutineRunner; 
 
 
-    private void Awake() 
+    private void Awake()
     {
         EnsureCoroutineRunner();
 
+        rb = GetComponent<Rigidbody>(); // CACHED Rigidbody
         animator = GetComponent<Animator>();
         navAgent = GetComponent<NavMeshAgent>();
-        capCollider = GetComponent<CapsuleCollider>();
+        capCollider = GetComponent<CapsuleCollider>(); 
 
         // Find Hunter’s hand collider logic remains
         Transform hand = transform.Find("HunterAttackHand");
         if (hand != null)
         {
-            attackCollider = hand.GetComponent<SphereCollider>();
-            if (attackCollider != null)
-                attackCollider.enabled = false;
+            attackHandGO = hand.gameObject;
+            // ASSIGNED TO INTERNAL FIELD
+            attackColliderInternal = hand.GetComponent<SphereCollider>(); 
+            if (attackColliderInternal != null)
+                attackColliderInternal.enabled = false;
         }
         else
         {
             Debug.LogWarning("Hunter: Could not find 'HunterAttackHand' child object for attack collider.", this);
         }
 
-        // Set initial stats only once when the game starts
         if (deathCount == 0)
         {
             currentChaseSpeed = initialChaseSpeed;
@@ -81,34 +92,54 @@ public class Hunter : MonoBehaviour
         }
     }
 
-    // OnEnable method to handle reset logic
     private void OnEnable()
     {
-        mainHP = initialHP; // Reset Health
+        mainHP = initialHP; 
         isDead = false;
 
-        // Re-enable components
+        // Re-enable main collider
         if (capCollider != null) capCollider.enabled = true;
+
+        if (rb != null)
+        {
+            // FIX: Reset Rigidbody state completely (Prevents "push away" from physics glitches)
+            rb.isKinematic = true;  
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = false; 
+            rb.detectCollisions = true; 
+        }
+        
         if (navAgent != null)
         {
+            // 1. Force a stop and ensure enabled before attempting reset
+            navAgent.isStopped = true;
             if (!navAgent.enabled) navAgent.enabled = true;
-            navAgent.isStopped = false;
-
-            // Positioning logic
+            
+            // 2. Positioning/Warp Logic
             GameObject[] spawnPointObjects = GameObject.FindGameObjectsWithTag(spawnPointTag);
             if (spawnPointObjects.Length > 0)
             {
                 int spawnIndex = Random.Range(0, spawnPointObjects.Length);
                 Transform selectedSpawnPoint = spawnPointObjects[spawnIndex].transform;
-                if (navAgent.isOnNavMesh)
-                {
-                    navAgent.Warp(selectedSpawnPoint.position);
-                    transform.rotation = selectedSpawnPoint.rotation;
-                }
+
+                // FIX: Hard reset the agent position
+                navAgent.enabled = false; 
+                transform.position = selectedSpawnPoint.position;
+                transform.rotation = selectedSpawnPoint.rotation;
+                navAgent.enabled = true; 
             }
+            
+            // 3. Clear any residual path/movement
             navAgent.ResetPath();
+            navAgent.isStopped = false; 
         }
-        if (attackCollider != null) attackCollider.enabled = false;
+
+        // FIX: Explicitly enable the attack hand GameObject on respawn
+        if (attackHandGO != null) attackHandGO.SetActive(true);
+        
+        // Ensure the collider component is enabled on its active GameObject
+        if (attackColliderInternal != null) attackColliderInternal.enabled = true; 
 
         // Reset Animator
         if (animator != null)
@@ -118,11 +149,12 @@ public class Hunter : MonoBehaviour
             animator.Play("Idle", 0, 0f); // Force back to Idle state
         }
 
-        ApplyCurrentStats(); // Apply potentially scaled stats
+        ApplyCurrentStats(); 
         Debug.Log($"Hunter {gameObject.name} Enabled/Respawned.");
     }
 
-    // Apply stats to the instance
+    private void Start() { /* Now handled by Awake and OnEnable */ }
+
     private void ApplyCurrentStats()
     {
         this.chaseSpeed = currentChaseSpeed;
@@ -135,13 +167,13 @@ public class Hunter : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        if (isDead) return; // Check to prevent multiple deaths
+        if (isDead) return; 
 
         mainHP -= damageAmount;
 
         if (mainHP <= 0)
         {
-            isDead = true; // Set flag
+            isDead = true; 
 
             if (animator != null)
             {
@@ -152,10 +184,15 @@ public class Hunter : MonoBehaviour
                 Debug.LogError("Hunter: Animator component not found!", this);
             }
 
-            // Disable components (using cached reference for main collider)
+            // Disable components 
             if (capCollider != null) capCollider.enabled = false;
             if (navAgent != null) navAgent.enabled = false;
-            if (attackCollider != null) attackCollider.enabled = false;
+
+            // FIX: Explicitly disable the attack hand GameObject on death
+            if (attackHandGO != null) attackHandGO.SetActive(false);
+
+            // Disable the collider component
+            if (attackColliderInternal != null) attackColliderInternal.enabled = false;
 
             StartCoroutine(DeathSequence());
         }
@@ -167,7 +204,6 @@ public class Hunter : MonoBehaviour
 
     private IEnumerator DeathSequence()
     {
-        // Wait for the duration of the death animation PLUS your original buffer
         yield return new WaitForSeconds(deathAnimationDuration + 1.0f);
 
         Debug.Log("Death animation finished (with buffer), triggering explosion.");
@@ -182,12 +218,10 @@ public class Hunter : MonoBehaviour
             Debug.LogWarning("Hunter: Death Effect Prefab not assigned.", this);
         }
 
-        // Prepare respawn and disable self instead of destroying
         PrepareRespawn(this);
         gameObject.SetActive(false);
     }
 
-    // Static Respawn Logic
     private static void PrepareRespawn(Hunter sourceSettingsHunter)
     {
         if (isRespawning) return;
@@ -199,7 +233,6 @@ public class Hunter : MonoBehaviour
             return;
         }
 
-        // Calculate next stats
         currentRespawnDelay = Mathf.Min(sourceSettingsHunter.initialRespawnDelay + (deathCount * sourceSettingsHunter.respawnDelayIncrease), sourceSettingsHunter.maxRespawnDelay);
         currentChaseSpeed = sourceSettingsHunter.initialChaseSpeed + (deathCount * sourceSettingsHunter.chaseSpeedIncrease);
         currentAttackDamage = sourceSettingsHunter.initialAttackDamage + (deathCount * sourceSettingsHunter.attackDamageIncrease);
@@ -231,14 +264,13 @@ public class Hunter : MonoBehaviour
         isRespawning = false;
     }
 
-    // Helper to get the coroutine runner
     private void EnsureCoroutineRunner()
     {
         if (coroutineRunner == null)
         {
             GameObject runnerGO = GameObject.Find("HunterCoroutineRunner");
             if (runnerGO == null) runnerGO = new GameObject("HunterCoroutineRunner");
-            DontDestroyOnLoad(runnerGO); // Make sure it persists
+            DontDestroyOnLoad(runnerGO); 
             coroutineRunner = runnerGO.GetComponent<EmptyMonoBehaviour>() ?? runnerGO.AddComponent<EmptyMonoBehaviour>();
         }
     }
@@ -246,17 +278,15 @@ public class Hunter : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // This method remains unchanged
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius); // Attack range
+        Gizmos.DrawWireSphere(transform.position, attackRadius); 
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius); // Detection / Chase start
+        Gizmos.DrawWireSphere(transform.position, detectionRadius); 
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, stopChaseRadius); // Chase stop
+        Gizmos.DrawWireSphere(transform.position, stopChaseRadius); 
     }
 }
 
-// Dummy MonoBehaviour needed for running coroutines statically ---
 public class EmptyMonoBehaviour : MonoBehaviour { }

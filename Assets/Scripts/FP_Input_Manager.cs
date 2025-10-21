@@ -12,13 +12,18 @@ namespace FacilityZero.Manager
         public bool CycleWeapons { get; set; }
         public bool Shoot { get; private set; }
         public bool Reload { get; private set; }
+        public bool Use { get; private set; }      // For items like medkits
+        public bool Interact { get; private set; } // For world interactions
 
+        // Was pressed this frame helpers
         public bool ShootPressedThisFrame => shootAction != null && shootAction.WasPressedThisFrame();
         public bool ReloadPressedThisFrame => reloadAction != null && reloadAction.WasPressedThisFrame();
+        public bool UsePressedThisFrame => useAction != null && useAction.WasPressedThisFrame();
+        public bool InteractPressedThisFrame => interactAction != null && interactAction.WasPressedThisFrame();
 
         private PlayerInput playerInput;
         private InputAction moveAction, lookAction, runAction;
-        private InputAction cycleWeaponsAction, shootAction, reloadAction;
+        private InputAction cycleWeaponsAction, shootAction, reloadAction, useAction, interactAction;
 
         private void Awake()
         {
@@ -31,12 +36,15 @@ namespace FacilityZero.Manager
             cycleWeaponsAction = actionMap.FindAction("CycleWeapons");
             shootAction = actionMap.FindAction("Shoot");
             reloadAction = actionMap.FindAction("Reload");
+            useAction = actionMap.FindAction("Use");
+            interactAction = actionMap.FindAction("Interact");
 
-            // Optional debug check for missing actions
             if (cycleWeaponsAction == null)
                 Debug.LogError("CycleWeapons action not found in " + actionMap.name);
-            else
-                Debug.Log("CycleWeapons action found!");
+            if (useAction == null)
+                Debug.LogWarning("Use action not found in " + actionMap.name);
+            if (interactAction == null)
+                Debug.LogWarning("Interact action not found in " + actionMap.name);
 
             HideCursor();
         }
@@ -60,6 +68,18 @@ namespace FacilityZero.Manager
 
             cycleWeaponsAction.performed += OnCycleWeapons;
 
+            if (useAction != null)
+            {
+                useAction.performed += OnUse;
+                useAction.canceled += OnUse;
+            }
+
+            if (interactAction != null)
+            {
+                interactAction.performed += OnInteract;
+                interactAction.canceled += OnInteract;
+            }
+
             playerInput.actions.Enable();
         }
 
@@ -82,6 +102,18 @@ namespace FacilityZero.Manager
 
             cycleWeaponsAction.performed -= OnCycleWeapons;
 
+            if (useAction != null)
+            {
+                useAction.performed -= OnUse;
+                useAction.canceled -= OnUse;
+            }
+
+            if (interactAction != null)
+            {
+                interactAction.performed -= OnInteract;
+                interactAction.canceled -= OnInteract;
+            }
+
             playerInput.actions.Disable();
         }
 
@@ -90,6 +122,8 @@ namespace FacilityZero.Manager
         private void OnRun(InputAction.CallbackContext ctx) => Run = ctx.ReadValueAsButton();
         private void OnShoot(InputAction.CallbackContext ctx) => Shoot = ctx.ReadValueAsButton();
         private void OnReload(InputAction.CallbackContext ctx) => Reload = ctx.ReadValueAsButton();
+        private void OnUse(InputAction.CallbackContext ctx) => Use = ctx.ReadValueAsButton();
+        private void OnInteract(InputAction.CallbackContext ctx) => Interact = ctx.ReadValueAsButton();
 
         private void OnCycleWeapons(InputAction.CallbackContext ctx)
         {
