@@ -28,6 +28,10 @@ namespace FacilityZero.GunController
         [Header("UI")]
         [SerializeField] private TMP_Text ammoText;
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource shootAudioSource; // <-- Add this
+        [SerializeField] private AudioClip shootClip;          // <-- Add this
+
         private bool isFlashing = false;
 
         // Properties used by WeaponAnimationHandler
@@ -41,9 +45,6 @@ namespace FacilityZero.GunController
             UpdateAmmoUI();
         }
 
-        /// <summary>
-        /// Returns true if shooting is possible (magazine not empty and fire rate allows)
-        /// </summary>
         public bool CanShoot()
         {
             return currentMag > 0 && Time.time >= nextFireTime;
@@ -61,6 +62,12 @@ namespace FacilityZero.GunController
         {
             currentMag--;
             UpdateAmmoUI();
+
+            // --- Play shoot sound ---
+            if (shootAudioSource != null && shootClip != null)
+            {
+                shootAudioSource.PlayOneShot(shootClip);
+            }
 
             // Muzzle flash
             if (Fire != null && FirePoint != null)
