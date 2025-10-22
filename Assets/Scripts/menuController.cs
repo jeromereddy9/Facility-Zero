@@ -53,8 +53,15 @@ public class menuController : MonoBehaviour
 
     public void ExitButton()
     {
-        Application.Quit();
+        Debug.Log("ExitButton pressed"); 
+
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; 
+        #else
+        Application.Quit(); // quits the built game
+        #endif
     }
+
 
     public void SetVolume(float value)
     {
