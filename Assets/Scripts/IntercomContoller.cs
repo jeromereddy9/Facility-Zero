@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using FacilityZero.Manager;
 using FacilityZero.PlayerInventory;
+using FacilityZero.UI;
 
 namespace FacilityZero.IntercomController
 {
@@ -13,10 +14,11 @@ namespace FacilityZero.IntercomController
         [SerializeField] private float doorMoveSpeed = 2f;
         [SerializeField] private TMP_Text popupText;
         [SerializeField] private Camera playerCamera;
+        [SerializeField] private WinScreen winScreen;
 
         [Header("Keycard Settings")]
         [SerializeField] private string requiredKeyTag = "Access Keycard lvl1";
-        [SerializeField] private int requiredKeyCount = 1; // number of keycards required
+        [SerializeField] private int requiredKeyCount = 1;
 
         private bool isPlayerLooking = false;
         private bool isDoorOpen = false;
@@ -38,6 +40,9 @@ namespace FacilityZero.IntercomController
 
             if (popupText != null)
                 popupText.gameObject.SetActive(false);
+
+            if (winScreen == null)
+                winScreen = FindObjectOfType<WinScreen>(true);
         }
 
         void Update()
@@ -52,40 +57,31 @@ namespace FacilityZero.IntercomController
             if (isDoorOpen && door != null)
             {
                 door.position = Vector3.MoveTowards(door.position, doorOpenPos, doorMoveSpeed * Time.deltaTime);
+
+                // ✅ Check for win condition once door is fully open
+                if (Vector3.Distance(door.position, doorOpenPos) < 0.05f)
+                {
+                    TryTriggerWin();
+                }
             }
         }
 
         void CheckPlayerLook()
         {
             Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-            PlayerInventory.PlayerInventory inventory = FindObjectOfType<PlayerInventory.PlayerInventory>();
-            int keyCount = inventory != null ? inventory.CountItemsWithTag(requiredKeyTag) : 0;
-
             if (Physics.Raycast(ray, out RaycastHit hit, 3f))
             {
                 if (hit.transform.CompareTag("Intercom"))
                 {
-                    if (!isPlayerLooking)
-                    {
-                        isPlayerLooking = true;
-                        popupText.gameObject.SetActive(true);
-                    }
-
-                    // Update popup with keycard count
-                    if (keyCount >= requiredKeyCount)
-                        popupText.text = $"Press I to use Intercom";
-                    else
-                        popupText.text = $"Need {requiredKeyCount} keycards ({keyCount}/{requiredKeyCount})";
-
+                    isPlayerLooking = true;
+                    popupText.gameObject.SetActive(true);
+                    popupText.text = "Press I to use Intercom";
                     return;
                 }
             }
 
-            if (isPlayerLooking)
-            {
-                isPlayerLooking = false;
-                popupText.gameObject.SetActive(false);
-            }
+            isPlayerLooking = false;
+            popupText.gameObject.SetActive(false);
         }
 
         void TryOpenDoor()
@@ -97,14 +93,47 @@ namespace FacilityZero.IntercomController
 
             if (keyCount >= requiredKeyCount)
             {
-                isDoorOpen = true;
                 popupText.gameObject.SetActive(false);
-                Debug.Log($"Door opened! Player has {keyCount}/{requiredKeyCount} keycards.");
+                isDoorOpen = true;
+                Debug.Log($"Door opened!");
             }
             else
             {
-                popupText.text = $"Access Denied: {requiredKeyCount} keycards required ({keyCount}/{requiredKeyCount})";
-                Debug.Log($"Not enough keycards! Player has {keyCount}/{requiredKeyCount}.");
+                popupText.text = $"Access Denied: Insufficient keycards";
+                Debug.Log($"Not enough keycards! ");
+            }
+        }
+
+        void TryTriggerWin()
+        {
+            if (door != null && door.CompareTag("Exit"))
+            {
+                PlayerInventory.PlayerInventory inventory = FindObjectOfType<PlayerInventory.PlayerInventory>();
+                if (inventory == null) return;
+
+                int keyCount = inventory.CountItemsWithTag(requiredKeyTag);
+
+                if (keyCount >= 4)
+                {
+                    Debug.Log("Player reached the Exit with all keycards! YOU WIN!");
+
+                    if (winScreen != null)
+                    {
+                        winScreen.gameObject.SetActive(true);
+                        winScreen.TriggerWinScreen();
+
+                        // ✅ Optional: freeze player movement
+                        if (inputManager != null)
+                            inputManager.enabled = false;
+                    }
+                    else
+                    {
+                        Debug.LogError("WinScreen reference missing in Intercom!");
+                    }
+
+                    // Ensure this only triggers once
+                    isDoorOpen = false;
+                }
             }
         }
     }

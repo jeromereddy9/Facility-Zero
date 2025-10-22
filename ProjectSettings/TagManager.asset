@@ -21,6 +21,7 @@ TagManager:
   - HunterAttackHand
   - HunterSpawnPoint
   - Datapad
+  - Exit
   layers:
   - Default
   - TransparentFX
