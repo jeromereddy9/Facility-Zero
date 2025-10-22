@@ -204,7 +204,7 @@ namespace FacilityZero.PlayerHealthController
             }
             else if (other.CompareTag("HunterAttackHand"))
             {
-                TakeDamage(20); // hunter damage
+                TakeDamage(15); // hunter damage
             }
             else if (other.CompareTag("DroneProjectile"))
             {

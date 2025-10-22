@@ -23,7 +23,7 @@ public class DroneAi : MonoBehaviour
     private bool hasPatrolPoint;
 
     [Header("Combat Settings")]
-    public float attackCoolDown = 0.8f;
+    public float attackCoolDown = 1f;
     private bool isOnAttackCooldown;
     public float forwardShotForce = 10f;
     public float verticalShotForce = 5f;
