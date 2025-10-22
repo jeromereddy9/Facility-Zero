@@ -29,12 +29,12 @@ namespace FacilityZero.GunController
         [SerializeField] private TMP_Text ammoText;
 
         [Header("Audio")]
-        [SerializeField] private AudioSource shootAudioSource; // <-- Add this
-        [SerializeField] private AudioClip shootClip;          // <-- Add this
+        [SerializeField] private AudioSource shootAudioSource; //
+        [SerializeField] private AudioClip shootClip;          
 
         private bool isFlashing = false;
 
-        // Properties used by WeaponAnimationHandler
+       
         public int CurrentMag => currentMag;
         public int MagCapacity => magCapacity;
         public int TotalAmmo => totalAmmo;

@@ -10,15 +10,15 @@ namespace FacilityZero.DeathScreen
         [SerializeField] private Image fadePanel;
         [SerializeField] private TMP_Text deathText;
         [SerializeField] private float fadeDuration = 2f;
-        [SerializeField] private float textFadeDuration = 1.5f; // separate speed for text
+        [SerializeField] private float textFadeDuration = 1.5f; 
 
         private void Start()
         {
             if (fadePanel != null)
-                fadePanel.color = new Color(0, 0, 0, 0); // fully transparent at start
+                fadePanel.color = new Color(0, 0, 0, 0); 
 
             if (deathText != null)
-                deathText.color = new Color(deathText.color.r, deathText.color.g, deathText.color.b, 0); // hidden text
+                deathText.color = new Color(deathText.color.r, deathText.color.g, deathText.color.b, 0); 
         }
 
         public void TriggerDeathScreen()
@@ -28,7 +28,7 @@ namespace FacilityZero.DeathScreen
 
         private IEnumerator FadeToDeath()
         {
-            // Step 1: Fade screen to black
+            
             float timer = 0f;
             while (timer < fadeDuration)
             {
@@ -39,11 +39,11 @@ namespace FacilityZero.DeathScreen
                 yield return null;
             }
 
-            // ?? Force final state to full black
+            
             if (fadePanel != null)
                 fadePanel.color = new Color(0, 0, 0, 1f);
 
-            // Step 2: Fade in "YOU DIED" text after screen is black
+            
             if (deathText != null)
             {
                 timer = 0f;
@@ -55,7 +55,7 @@ namespace FacilityZero.DeathScreen
                     yield return null;
                 }
 
-                // ?? Force final state to fully visible
+               
                 deathText.color = new Color(deathText.color.r, deathText.color.g, deathText.color.b, 1f);
             }
         }
