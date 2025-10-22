@@ -6,37 +6,25 @@ public class HunterAttack : StateMachineBehaviour
 {
     Transform player;
     NavMeshAgent agent;
-    SphereCollider attackCollider;  // Hunter’s attack collider
-    Hunter hunter;                   // Reference to Hunter script
+    Hunter hunter;
 
     // Called when the attack state starts
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // Cache references
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
         agent = animator.GetComponent<NavMeshAgent>();
         hunter = animator.GetComponent<Hunter>();
 
-        if (hunter == null)
+        // FIX: Use the cached and exposed reference from Hunter.cs
+        if (hunter == null || hunter.AttackCollider == null)
         {
-            Debug.LogError("Hunter script not found on the Animator's GameObject for HunterAttack.");
+            Debug.LogError("Hunter script or AttackCollider not ready for HunterAttack state.", animator.gameObject);
             return;
         }
 
-        // Find the child tagged as "HunterAttackHand"
-        Transform[] children = animator.GetComponentsInChildren<Transform>();
-        foreach (Transform child in children)
-        {
-            if (child.CompareTag("HunterAttackHand"))
-            {
-                attackCollider = child.GetComponent<SphereCollider>();
-                break;
-            }
-        }
-
-        // Enable collider when attack starts
-        if (attackCollider != null)
-            attackCollider.enabled = true;
+        // Enable the cached collider when attack starts
+        hunter.AttackCollider.enabled = true;
     }
 
     // Called every frame while in the attack animation
@@ -57,9 +45,9 @@ public class HunterAttack : StateMachineBehaviour
     // Called when leaving the attack state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // Disable collider when attack ends
-        if (attackCollider != null)
-            attackCollider.enabled = false;
+        // FIX: Disable the cached collider when attack ends
+        if (hunter != null && hunter.AttackCollider != null)
+            hunter.AttackCollider.enabled = false;
     }
 
     private void LookAtPlayer()
@@ -75,4 +63,3 @@ public class HunterAttack : StateMachineBehaviour
         }
     }
 }
-

@@ -1120,7 +1120,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 30.90067, y: 0.99999905, z: -9.652822}
-  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7548612180603651663}
@@ -1206,14 +1206,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb9b49f88e50ac4d967aca020c094ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hunter
-  mainHP: 50
+  spawnPointTag: HunterSpawnPoint
+  initialRespawnDelay: 10
+  respawnDelayIncrease: 2
+  maxRespawnDelay: 60
+  initialChaseSpeed: 5
+  chaseSpeedIncrease: 0.5
+  initialAttackDamage: 10
+  attackDamageIncrease: 2
+  initialHP: 50
   chaseSpeed: 5
   attackRadius: 2.5
   detectionRadius: 9999
   stopChaseRadius: 9999
   stopAttackingRadius: 2.5
+  attackDamage: 10
   deathEffectPrefab: {fileID: 6826934814833337938, guid: b237f3d533c61454488647bf7188b534, type: 3}
-  effectDelay: 0.1
+  deathAnimationDuration: 1.5
   effectLifetime: 5
 --- !u!1 &3570673075954464477
 GameObject:
