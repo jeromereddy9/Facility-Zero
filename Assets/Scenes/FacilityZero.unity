@@ -29822,7 +29822,7 @@ MonoBehaviour:
   fallbackIcon: {fileID: 0}
   tagName: Ammo Box
   ammoToAdd: 7
-  hpIncreaseAmount: 0
+  hpIncreaseAmount: 100
 --- !u!65 &557904790
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30786,7 +30786,7 @@ MonoBehaviour:
   fallbackIcon: {fileID: 0}
   tagName: 
   ammoToAdd: 0
-  hpIncreaseAmount: 0
+  hpIncreaseAmount: 100
 --- !u!114 &584722737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38148,7 +38148,7 @@ MonoBehaviour:
   fallbackIcon: {fileID: 0}
   tagName: 
   ammoToAdd: 0
-  hpIncreaseAmount: 0
+  hpIncreaseAmount: 100
 --- !u!65 &723407170
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -67888,7 +67888,7 @@ MonoBehaviour:
   fallbackIcon: {fileID: 0}
   tagName: 
   ammoToAdd: 0
-  hpIncreaseAmount: 0
+  hpIncreaseAmount: 100
 --- !u!65 &1237600272
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -69842,7 +69842,7 @@ MonoBehaviour:
   fallbackIcon: {fileID: 0}
   tagName: 
   ammoToAdd: 0
-  hpIncreaseAmount: 0
+  hpIncreaseAmount: 100
 --- !u!65 &1281784408
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -103490,7 +103490,7 @@ MonoBehaviour:
   fallbackIcon: {fileID: 0}
   tagName: 
   ammoToAdd: 0
-  hpIncreaseAmount: 0
+  hpIncreaseAmount: 100
 --- !u!65 &1922272404
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -110565,11 +110565,11 @@ MonoBehaviour:
   pistolArms: {fileID: 551300803}
   shotgunArms: {fileID: 716065983}
   armsOffset: {x: 0, y: 0, z: 0}
-  bobFrequency: 3
+  bobFrequency: 6
   bobAmplitude: 0.02
   cam: {fileID: 1809105443}
   runFOV: 75
-  fovLerpSpeed: 2
+  fovLerpSpeed: 5
   inputManager: {fileID: 2050068081}
 --- !u!114 &2050068084
 MonoBehaviour:

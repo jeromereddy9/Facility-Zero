@@ -73,7 +73,7 @@ namespace FacilityZero.IntercomController
 
                     // Update popup with keycard count
                     if (keyCount >= requiredKeyCount)
-                        popupText.text = $"Press I to use Intercom ({keyCount}/{requiredKeyCount} keycards)";
+                        popupText.text = $"Press I to use Intercom";
                     else
                         popupText.text = $"Need {requiredKeyCount} keycards ({keyCount}/{requiredKeyCount})";
 
